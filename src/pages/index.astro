@@ -1,0 +1,20 @@
+---
+// Startseite: immer src/content/pages/start.md (R-06).
+import { getEntry, render } from 'astro:content';
+import Page from '../layouts/page.astro';
+
+const page = await getEntry('pages', 'start');
+
+if (!page) {
+  throw new Error('Startseite fehlt: src/content/pages/start.md muss existieren (AGENTS.md R-06).');
+}
+if (page.data.draft) {
+  throw new Error('src/content/pages/start.md ist als draft markiert und würde veröffentlicht (AGENTS.md R-04).');
+}
+
+const { Content } = await render(page);
+---
+
+<Page title={page.data.title} description={page.data.description} noindex={page.data.noindex}>
+  <Content />
+</Page>

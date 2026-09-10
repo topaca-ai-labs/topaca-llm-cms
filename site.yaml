@@ -1,0 +1,35 @@
+# site.yaml — kanonische Konfiguration der Website
+#
+# Einzige Quelle für Name, Domain, Sprache und Navigation (Regel R-05 in AGENTS.md).
+# Diese Datei darf keine inhaltlichen Behauptungen enthalten, die nicht durch
+# Material in input/ gedeckt sind (R-07).
+#
+# Platzhalter in [ECKIGEN KLAMMERN] müssen vor dem Livegang ersetzt werden.
+# npm run check:strict schlägt fehl, solange Platzhalter im Output stehen.
+
+name: "[FIRMENNAME]"
+tagline: "[Ein Satz zur Positionierung — Beleg: input/brief.md]"
+url: "https://example.com"          # vor dem Livegang ersetzen (R-05)
+language: "de"
+
+# Navigation: Reihenfolge = Anzeige. Jeder href muss zu einer Seite gehören,
+# die kein Draft ist — sonst Fehler bei npm run validate.
+nav:
+  - label: Leistungen
+    href: /leistungen/
+  - label: Über uns
+    href: /ueber-uns/
+  - label: Kontakt
+    href: /kontakt/
+
+# Fußzeile: rechtliche und sekundäre Links.
+footer:
+  - label: Impressum
+    href: /impressum/
+  - label: Datenschutz
+    href: /datenschutz/
+
+contact:
+  email: "[E-MAIL]"
+  phone: "[TELEFON]"
+  address: "[ADRESSE]"

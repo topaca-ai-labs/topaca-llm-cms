@@ -1,0 +1,25 @@
+{
+  "name": "topaca-llm-cms",
+  "version": "0.1.0",
+  "private": true,
+  "description": "LLM-CMS Minimalvariante: Astro-Template + AGENTS.md + input/-Vertrauensgrenze + deterministische Checks",
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "validate": "astro sync && node scripts/check.mjs source",
+    "build": "astro build && node scripts/check.mjs dist",
+    "preview": "astro build && node scripts/check.mjs dist && astro preview",
+    "check": "npm run validate && npm run build",
+    "check:strict": "astro sync && node scripts/check.mjs source --strict && astro build && node scripts/check.mjs dist --strict",
+    "reproducible": "node scripts/reproducible.mjs",
+    "selftest": "bash scripts/selftest.sh",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^7.3.2",
+    "js-yaml": "^4.1.0"
+  }
+}

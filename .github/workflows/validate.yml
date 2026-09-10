@@ -1,0 +1,45 @@
+name: validate
+
+# Der Reparatur-Loop des Agenten, gespiegelt in CI: derselbe Stand, denselben
+# Befehl, dasselbe Ergebnis. Grün in CI ist die Bedingung für jede Freigabe.
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - run: npm ci
+
+      # Schema des Frontmatters plus Quellen-Checks
+      - name: Quellen prüfen
+        run: npm run validate
+
+      # Astro-Build plus Checks der Ausgabe
+      - name: Bauen und Ausgabe prüfen
+        run: npm run build
+
+      - name: Reproduzierbarkeit
+        run: npm run reproducible
+
+      - name: Nachweis, dass die Checks greifen
+        run: npm run selftest
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: dist/
+          retention-days: 7

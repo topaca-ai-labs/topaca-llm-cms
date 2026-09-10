@@ -1,0 +1,183 @@
+/* Ein Stylesheet für die ganze Website (R-09). Keine Frameworks, kein JavaScript.
+   Alle Werte stehen als Tokens in :root — Farben, Abstände und Typografie werden
+   hier geändert, nicht in einzelnen Seiten. */
+
+:root {
+  --farbe-hintergrund: #ffffff;
+  --farbe-text: #1a1c1f;
+  --farbe-text-dezent: #5b6068;
+  --farbe-akzent: #0b57d0;
+  --farbe-rahmen: #e2e5ea;
+  --breite-text: 42rem;
+  --abstand: 1.5rem;
+  --schrift: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --farbe-hintergrund: #14161a;
+    --farbe-text: #e8eaed;
+    --farbe-text-dezent: #a0a6af;
+    --farbe-akzent: #8ab4ff;
+    --farbe-rahmen: #2a2e35;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--farbe-hintergrund);
+  color: var(--farbe-text);
+  font-family: var(--schrift);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  padding: 0 var(--abstand);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+  width: 100%;
+  max-width: var(--breite-text);
+  margin: 0 auto;
+  padding: calc(var(--abstand) * 2) 0;
+}
+
+/* Kopf- und Fußzeile */
+
+.site-header,
+.site-footer {
+  width: 100%;
+  max-width: var(--breite-text);
+  margin: 0 auto;
+  padding: var(--abstand) 0;
+}
+
+.site-header {
+  border-bottom: 1px solid var(--farbe-rahmen);
+}
+
+.site-footer {
+  border-top: 1px solid var(--farbe-rahmen);
+  color: var(--farbe-text-dezent);
+  font-size: 0.9375rem;
+}
+
+.brand {
+  font-weight: 700;
+  font-size: 1.125rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.tagline {
+  margin: 0.25rem 0 0;
+  color: var(--farbe-text-dezent);
+  font-size: 0.9375rem;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--abstand);
+  margin: var(--abstand) 0 0;
+  padding: 0;
+}
+
+.site-footer nav ul {
+  margin: 0;
+}
+
+nav a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  padding-bottom: 2px;
+}
+
+nav a:hover,
+nav a[aria-current='page'] {
+  color: var(--farbe-akzent);
+  border-bottom-color: var(--farbe-akzent);
+}
+
+/* Typografie */
+
+h1 {
+  font-size: clamp(1.75rem, 5vw, 2.25rem);
+  line-height: 1.2;
+  margin: 0 0 var(--abstand);
+}
+
+h2 {
+  font-size: 1.375rem;
+  margin: calc(var(--abstand) * 2) 0 0.5rem;
+}
+
+h3 {
+  font-size: 1.125rem;
+  margin: calc(var(--abstand) * 1.5) 0 0.5rem;
+}
+
+p,
+ul,
+ol {
+  margin: 0 0 var(--abstand);
+}
+
+a {
+  color: var(--farbe-akzent);
+}
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+code {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.9375em;
+  background: color-mix(in srgb, var(--farbe-text) 6%, transparent);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+}
+
+:focus-visible {
+  outline: 3px solid var(--farbe-akzent);
+  outline-offset: 2px;
+}
+
+.skip {
+  position: absolute;
+  left: -9999px;
+}
+
+.skip:focus {
+  left: var(--abstand);
+  top: var(--abstand);
+  background: var(--farbe-hintergrund);
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--farbe-akzent);
+  border-radius: 4px;
+}
+
+.copyright {
+  margin: var(--abstand) 0 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}

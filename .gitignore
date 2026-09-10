@@ -1,0 +1,19 @@
+# Build ist wegwerfbar (R-03) — niemals committen
+dist/
+.astro/
+
+# Abhängigkeiten
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Geheimnisse (R-04) — niemals committen
+.env
+.env.*
+
+# macOS / IDE
+.DS_Store
+.idea/

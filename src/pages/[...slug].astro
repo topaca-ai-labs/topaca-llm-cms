@@ -1,0 +1,27 @@
+---
+// Alle Seiten außer der Startseite. Eine Route, ein Layout — keine weiteren
+// Templates, solange sie nicht gebraucht werden (R-06, R-16).
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import Page from '../layouts/page.astro';
+import { pathFor } from '../lib/page';
+
+type Props = { page: CollectionEntry<'pages'> };
+
+export async function getStaticPaths() {
+  const pages = await getCollection('pages', ({ data }) => !data.draft);
+  return pages
+    .filter((entry) => !['start', 'index'].includes(entry.id.replace(/\.md$/, '')))
+    .map((entry) => ({
+      params: { slug: pathFor(entry).replace(/^\/+|\/+$/g, '') },
+      props: { page: entry } satisfies Props,
+    }));
+}
+
+const { page } = Astro.props;
+const { Content } = await render(page);
+---
+
+<Page title={page.data.title} description={page.data.description} noindex={page.data.noindex}>
+  <Content />
+</Page>

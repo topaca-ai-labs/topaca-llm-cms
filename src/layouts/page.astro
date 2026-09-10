@@ -1,0 +1,73 @@
+---
+import { site } from '../lib/site';
+import '../styles/global.css';
+
+type Props = {
+  title: string;
+  description: string;
+  noindex?: boolean;
+};
+
+const { title, description, noindex = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).href;
+const current = Astro.url.pathname.replace(/(.+)\/$/, '$1') || '/';
+const fullName = title === site.name ? site.name : `${title} — ${site.name}`;
+---
+
+<!doctype html>
+<html lang={site.language}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullName}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
+    <meta property="og:title" content={fullName} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap.xml" />
+  </head>
+  <body>
+    <a class="skip" href="#inhalt">Zum Inhalt springen</a>
+    <header class="site-header">
+      <a class="brand" href="/">{site.name}</a>
+      {site.tagline ? <p class="tagline">{site.tagline}</p> : null}
+      <nav aria-label="Hauptnavigation">
+        <ul>
+          {
+            site.nav.map((item) => (
+              <li>
+                <a href={item.href} aria-current={current === item.href.replace(/\/$/, '') ? 'page' : undefined}>
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </header>
+
+    <main id="inhalt">
+      <h1>{title}</h1>
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <nav aria-label="Fußzeile">
+        <ul>
+          {
+            site.footer.map((item) => (
+              <li>
+                <a href={item.href}>{item.label}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+      <p class="copyright">© {site.name}</p>
+    </footer>
+  </body>
+</html>
