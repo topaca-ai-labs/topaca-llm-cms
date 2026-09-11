@@ -73,6 +73,10 @@ src/content.config.ts  astro.config.mjs  package.json  package-lock.json
 Der Grund ist banal: Ein Validator, den das geprüfte System selbst anpassen darf, ist
 kein Validator.
 
+Inhaber dieser Control Plane ist Markus Ertel, TOPACA AI Labs (Copyright © 2026,
+`LICENSE`). `.github/CODEOWNERS` trägt den Namen, aber noch keinen gültigen GitHub-Handle —
+solange ist R-19 Sichtbarkeit ohne Sperre.
+
 ## 4. Geringte Rechte (R-20)
 
 | Recht | Braucht der Agent? |

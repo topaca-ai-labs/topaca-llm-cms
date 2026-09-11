@@ -73,7 +73,7 @@ keine Vorschau auf PDFs. *Auslöser:* Materialbestand, der ohne Suche nicht mehr
 | Frage | Entscheidung |
 | --- | --- |
 | Astro oder Hugo | Astro — Content-Layer-Schema im Build, Node-Umgebung vorhanden |
-| Lizenz | MIT (`LICENSE`), Versionsstand 0.2.0 |
+| Lizenz und Inhaberschaft | MIT (`LICENSE`), Copyright © 2026 Markus Ertel, TOPACA AI Labs |
 | Startseite | ausschließlich `start.md`; `index` reserviert, `slug: /` abgelehnt |
 | `input/` im Repository | standardmäßig nicht getrackt (`input/**`), Ausnahmen nur README und Brief-Vorlage |
 | Schweregrade | `MUST` → Fehler, `SOLL` → Warnung; `--strict` hebt Warnungen auf Blockadestufe |

@@ -141,7 +141,11 @@ CDN, Netlify, GitHub Pages, ein Nginx, ein Ordner auf einem Webspace. Der Produk
 ist kein CMS, sondern ein Auslieferungsziel. Deployment ist ein eigener, vom Menschen
 freigegebener Schritt (R-20).
 
-## Lizenz
+## Lizenz und Inhaberschaft
 
-MIT, siehe [`LICENSE`](LICENSE). Das Material in `docs/llm-cms.md`, `docs/feedback.md` und
-dem Audit-Dokument ist Ausgangsmaterial dieses Templates und nicht Teil der Lizenz.
+Copyright © 2026 Markus Ertel, TOPACA AI Labs. Der Code dieses Templates steht unter MIT,
+siehe [`LICENSE`](LICENSE); `package.json` nennt dieselbe Inhaberschaft.
+
+Die Texte in `docs/llm-cms.md`, `docs/feedback.md` und dem Audit-Dokument sind
+Ausgangsmaterial und nicht Teil dieser Lizenz. Welche Lizenz auf ihnen liegt, entscheidet
+der Inhaber.

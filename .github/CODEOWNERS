@@ -1,8 +1,10 @@
 # Inhaber der Control Plane (AGENTS.md R-19).
 #
-# Diese Datei ist eine Vorlage: der Platzhalter unten ist kein gültiger
-# GitHub-Handle. Vor der Referenzfreigabe durch den echten Inhaber ersetzen —
-# eine CODEOWNERS-Datei ohne gültigen Inhaber wirkt nicht und täuscht Schutz vor.
+# Inhaber des Templates: Markus Ertel, TOPACA AI Labs (Copyright © 2026, siehe LICENSE).
+#
+# Diese Datei ist eine Vorlage: der Platzhalter unten ist kein gültiger GitHub-Handle.
+# Vor der Referenzfreigabe durch den echten Handle des Inhabers ersetzen — eine
+# CODEOWNERS-Datei ohne gültigen Inhaber wirkt nicht und täuscht Schutz vor.
 # Zusammen mit Branch Protection: "Require review from code owners" an.
 #
 # Die Pfadliste ist dieselbe wie CONTROL_PLANE in scripts/check.mjs.

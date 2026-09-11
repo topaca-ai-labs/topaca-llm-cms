@@ -56,7 +56,7 @@ Test nachprüfbar. Nichts hier ist eine Absichtserklärung.
 | P2-01 JSON-Diagnostics | `--json` mit Umschlag `{ok, mode, lifecycle, strict, release, summary, diagnostics[]}`; stabile Codes, `rule`, `file`, `line`, `hint` | `docs/architecture.md` §6, Tests lesen ausschließlich JSON |
 | P2-02 Node-basierte Test-Suite | `node:test`, 3 Dateien, 130 Tests, keine externe Abhängigkeit | `npm test` |
 | P2-03 URL/Path-Property-Tests | Idempotenz der Normalisierung, Table-Driven für Segmente, Route ↔ Auslieferungsdatei | `tests/route.test.mjs` |
-| P2-04 Control Plane über CODEOWNERS | `.github/CODEOWNERS` auf dieselbe Pfadliste wie `CONTROL_PLANE` | `.github/CODEOWNERS` (Inhaber vor Freigabe eintragen) |
+| P2-04 Control Plane über CODEOWNERS | `.github/CODEOWNERS` auf dieselbe Pfadliste wie `CONTROL_PLANE` | `.github/CODEOWNERS` (Inhaber namentlich gesetzt; GitHub-Handle und Branch Protection stehen aus) |
 | P2-05 Branch Protection dokumentieren | `docs/security.md` §3 und §7 nennen den Schritt; er ist eine Repository-Einstellung, kein Dateiinhalt | `AGENTS.md` R-19 |
 | P2-06 Actions auf SHAs pinnen | `actions/checkout` und `actions/setup-node` mit 40-stelligen SHAs, Versionskommentar daneben | `.github/workflows/validate.yml` |
 | P2-07 Node/npm präziser fixieren | `.node-version`, `engines.node`, `packageManager`, `npm ci` in CI, Matrix 22 + Referenz | `docs/architecture.md` §9 |

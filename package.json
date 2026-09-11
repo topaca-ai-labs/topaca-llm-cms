@@ -5,6 +5,7 @@
   "description": "LLM-CMS Minimalvariante: Astro-Template + AGENTS.md + input/-Vertrauensgrenze + deterministische Validator-Diagnosen",
   "type": "module",
   "license": "MIT",
+  "author": "Markus Ertel — TOPACA AI Labs",
   "engines": {
     "node": ">=22.12.0"
   },

@@ -230,6 +230,9 @@ das steht in der Diagnose dazu (`docs/security.md`).
 - [ ] Impressum und Datenschutz von Menschen gefüllt und geprüft (R-13)
 - [ ] `npm run reproducible` grün
 - [ ] Repository ist privat oder bewusst öffentlich: kein getracktes Material in `input/` (R-04)
+- [ ] Inhaber hinterlegt: `LICENSE` (Copyright © 2026 Markus Ertel, TOPACA AI Labs) und
+      `.github/CODEOWNERS` mit echtem Handle; Branch Protection im Hosting-Dienst an
+      (R-19 — eine Datei kann keinen Branch-Schutz einstellen)
 - [ ] `dist/` wird deployt, niemals verändert (R-03)
 
 ## 8. Wenn es nicht weitergeht
