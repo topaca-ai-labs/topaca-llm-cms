@@ -27,6 +27,9 @@ Regeldatei, eine Vertrauensgrenze und deterministische Prüfungen.
 
 Der eigene Code prüft. Er baut nichts selbst.
 
+**Bedienung, Schritt für Schritt:** [`docs/guide.md`](docs/guide.md) — inkl. Diagnosen-
+Nachschlage mit allen 76 Diagnose-Codes und Reparatur-Pfad.
+
 ## 60 Sekunden Start
 
 ```bash
@@ -112,6 +115,7 @@ scripts/
   release-archive.mjs  Archiv aus einem Commit, frei von node_modules und dist
 tests/                 132 Tests: route, validator, build (node:test, Fixtures)
 docs/
+  guide.md             Handbuch: einrichten, Inhalte ändern, prüfen, freigeben, übergeben
   architecture.md      Schichten, Diagnosen, Umgebung, Entscheidungen
   security.md          Grenzen, Control Plane, was Prüfungen nicht beweisen
   assets.md            Übernahme von Material nach public/
