@@ -1,0 +1,9 @@
+dist/
+.astro/
+node_modules/
+.DS_Store
+input/**
+!input/*/
+!input/README.md
+!input/brief.example.md
+!input/*/README.md

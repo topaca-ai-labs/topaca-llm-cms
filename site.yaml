@@ -1,19 +1,26 @@
 # site.yaml — kanonische Konfiguration der Website
 #
-# Einzige Quelle für Name, Domain, Sprache und Navigation (Regel R-05 in AGENTS.md).
-# Diese Datei darf keine inhaltlichen Behauptungen enthalten, die nicht durch
-# Material in input/ gedeckt sind (R-07).
+# Einzige Quelle für Name, Domain, Sprache, Lebenszyklus, Navigation und
+# Kontaktdaten (Regel R-05 in AGENTS.md). Diese Datei darf keine inhaltlichen
+# Behauptungen enthalten, die nicht durch Material in input/ gedeckt sind (R-07).
+#
+# Diese Datei wird gegen ein Schema geprüft: src/lib/site-schema.mjs. Ein
+# Tippfehler (navi: statt nav:) ist ein Fehler, keine stillgelegte Navigation.
 #
 # Platzhalter in [ECKIGEN KLAMMERN] müssen vor dem Livegang ersetzt werden.
-# npm run check:strict schlägt fehl, solange Platzhalter im Output stehen.
+# Im lifecycle: development ist die Website nicht indexierbar (R-21).
 
 name: "[FIRMENNAME]"
-tagline: "[Ein Satz zur Positionierung — Beleg: input/brief.md]"
+tagline: "[Ein Satz zur Positionierung — Beleg: input/brief.example.md]"
 url: "https://example.com"          # vor dem Livegang ersetzen (R-05)
 language: "de"
 
-# Navigation: Reihenfolge = Anzeige. Jeder href muss zu einer Seite gehören,
-# die kein Draft ist — sonst Fehler bei npm run validate.
+# development: robots.txt sperrt, keine Indexierung, Platzhalter erlaubt.
+# production: ausdrückliche Freigabe — requires npm run check:release (R-21).
+lifecycle: development
+
+# Navigation: Reihenfolge = Anzeige. Jeder href muss zu einer Seite gehören, die
+# kein Draft ist — sonst Fehler bei npm run validate.
 nav:
   - label: Leistungen
     href: /leistungen/
@@ -29,6 +36,8 @@ footer:
   - label: Datenschutz
     href: /datenschutz/
 
+# Single Source of Truth für Kontaktwerte. Seiten setzen `contact: true` im
+# Frontmatter und rendern diese Werte; sie schreiben sie nicht selbst ab (R-05).
 contact:
   email: "[E-MAIL]"
   phone: "[TELEFON]"

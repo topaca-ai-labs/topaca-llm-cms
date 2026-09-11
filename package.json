@@ -1,25 +1,30 @@
 {
   "name": "topaca-llm-cms",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
-  "description": "LLM-CMS Minimalvariante: Astro-Template + AGENTS.md + input/-Vertrauensgrenze + deterministische Checks",
+  "description": "LLM-CMS Minimalvariante: Astro-Template + AGENTS.md + input/-Vertrauensgrenze + deterministische Validator-Diagnosen",
   "type": "module",
+  "license": "MIT",
   "engines": {
     "node": ">=22.12.0"
   },
+  "packageManager": "npm@11.19.0",
   "scripts": {
     "dev": "astro dev",
     "validate": "astro sync && node scripts/check.mjs source",
     "build": "astro build && node scripts/check.mjs dist",
     "preview": "astro build && node scripts/check.mjs dist && astro preview",
     "check": "npm run validate && npm run build",
-    "check:strict": "astro sync && node scripts/check.mjs source --strict && astro build && node scripts/check.mjs dist --strict",
+    "check:strict": "astro sync && node scripts/check.mjs source --strict && node scripts/check.mjs dist --strict",
+    "check:release": "npm run build && node scripts/check.mjs source --release && node scripts/check.mjs dist --release",
+    "test": "node --test tests/",
     "reproducible": "node scripts/reproducible.mjs",
-    "selftest": "bash scripts/selftest.sh",
+    "release:archive": "node scripts/release-archive.mjs",
     "astro": "astro"
   },
   "dependencies": {
     "astro": "^7.3.2",
-    "js-yaml": "^4.1.0"
+    "js-yaml": "^4.1.0",
+    "zod": "^4.6.1"
   }
 }

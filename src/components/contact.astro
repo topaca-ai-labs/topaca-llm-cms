@@ -1,0 +1,35 @@
+---
+// Kontaktdaten: ausschließlich aus site.yaml (R-05, R-10).
+// Ein Wert, der dort fehlt, erscheint gar nicht — er wird nicht erfunden (R-07).
+import { site } from '../lib/site';
+
+const rows = [
+  { label: 'E-Mail', value: site.contact?.email, href: site.contact?.email ? `mailto:${site.contact.email}` : '' },
+  { label: 'Telefon', value: site.contact?.phone, href: site.contact?.phone ? `tel:${site.contact.phone.replace(/\s+/g, '')}` : '' },
+  { label: 'Adresse', value: site.contact?.address, href: '' },
+].filter((row) => row.value);
+---
+
+{
+  rows.length > 0 && (
+    <section class="contact">
+      <h2>Kontaktdaten</h2>
+      <address>
+        <dl>
+          {rows.map((row) => (
+            <div>
+              <dt>{row.label}</dt>
+              <dd>
+                {row.href ? <a href={row.href}>{row.value}</a> : <span>{row.value}</span>}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </address>
+      <p class="contact-note">
+        These Angaben stehen zentral in <code>site.yaml</code>. Andere Seiten lesen sie
+        aus dieser Datei, nicht voneinander.
+      </p>
+    </section>
+  )
+}

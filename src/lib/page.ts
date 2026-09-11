@@ -1,18 +1,21 @@
 import type { CollectionEntry } from 'astro:content';
+import { outputFileFor, routeForPage } from './route.mjs';
 
 /**
  * URL einer Seite: explizites `slug` aus dem Frontmatter, sonst aus dem
- * Dateinamen abgeleitet (R-10). `start.md` und `index.md` sind die Startseite.
+ * Dateinamen abgeleitet. Die Mechanik selbst liegt in `route.mjs` — dort, wo
+ * auch der Validator sie benutzt (R-10). Diese Datei ist nur der Adapter für
+ * Astro-Einträge.
  */
 export function pathFor(entry: CollectionEntry<'pages'>): string {
-  if (entry.data.slug) return entry.data.slug;
-  const base = entry.id.replace(/\.md$/, '');
-  if (base === 'start' || base === 'index') return '/';
-  return '/' + base.split('/').join('/') + '/';
+  const route = routeForPage(entry.id, entry.data.slug);
+  if (!route) {
+    throw new Error(`Route für ${entry.id} ist nicht kanonisch (AGENTS.md R-10): slug="${entry.data.slug}"`);
+  }
+  return route;
 }
 
-/** Seitenpfad relativ zur Website-Wurzel, ohne führenden Slash. */
-export function outputFileFor(entry: CollectionEntry<'pages'>): string {
-  const p = pathFor(entry);
-  return p === '/' ? 'index.html' : `${p.replace(/^\//, '')}index.html`;
+/** Datei im Build, in die diese Seite geschrieben wird. */
+export function outputFile(entry: CollectionEntry<'pages'>): string {
+  return outputFileFor(pathFor(entry));
 }

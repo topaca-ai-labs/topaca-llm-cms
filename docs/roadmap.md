@@ -9,7 +9,7 @@ Jeder Punkt ist eine Entscheidung, kein Vergessen.
 neben dem HTML. Der Standard dafür ist nicht verbreitet: Anbieter übernehmen ihn nicht, und
 ein zweiter Ausgang verdoppelt die Build-Logik, ohne dass heute jemand davon liest.
 Diese Website liefert stattdessen, was Maschinen tatsächlich auswerten: semantisches HTML,
-`lang`, kanonische Links, Meta-Beschreibungen, Sitemap, `robots.txt`.
+`lang`, kanonische Links, Meta-Beschreibungen, Sitemap, `robots.txt` aus dem Lebenszyklus.
 *Auslöser:* ein Auswerter, nachweislich davon profitiert.
 
 **Externer Link-Checker (`lychee`, `htmltest`).** Prüft auch externe Ziele, braucht aber eine
@@ -17,11 +17,18 @@ Installation und macht die Prüfung vom Netzwerk abhängig. Der eingebaute Check
 was im Repo liegen muss, offline und deterministisch.
 *Auslöser:* häufige kaputte externe Ziele oder Anspruch auf Prüfung ausgehender Links.
 
+**Cross-Environment-Reproduzierbarkeit.** `npm run reproducible` vergleicht zwei Builds in
+derselben Umgebung (`.node-version`, `packageManager`, Lockfile) und sagt das auch. Ein
+anspruchsvollerer Beweis braucht ein festes Container-Image mit exakter Toolchain und einen
+Hashvergleich über Betriebssysteme hinweg — ein eigenes Thema, kein Textfehler.
+*Auslöser:* zwei Umgebungen, deren Builds sich unterscheiden und bei denen das zählen muss.
+
 ## Zurückgestellt, weil der Bedarf noch nicht da ist
 
-**Zweites Layout oder Komponenten.** Eine Seite, ein Layout, ein Stylesheet. Solange jede
-Seite dieselbe Struktur hat, ist ein zweiter Rendering-Pfad nur eine zweite Möglichkeit,
-etwas kaputt zu machen. *Auslöser:* Seitentyp mit anderer Struktur (Blog-Liste, Terminseite).
+**Zweites Layout oder Komponenten.** Eine Seite, ein Layout, ein Stylesheet, ein
+Kontakt-Baustein. Solange jede Seite dieselbe Struktur hat, ist ein zweiter Rendering-Pfad
+nur eine zweite Möglichkeit, etwas kaputt zu machen. *Auslöser:* Seitentyp mit anderer
+Struktur (Blog-Liste, Terminseite).
 
 **Mehrsprachigkeit.** Das Muster nennt „neue Sprache hinzufügen" als Wartungsfall. Astro hat
 dafür ein i18n-Konzept, das hier aber Navigation, URL-Schema, Checks und Inhalte gleichzeitig
@@ -29,14 +36,29 @@ anfasst. *Auslöser:* eine zweite Sprache mit echtem Publikum und geklärter Üb
 
 **Formulare, Kommentare, Suche.** Erfordern einen Server oder einen Drittdienst und damit
 Datenschutz-Aussagen, die heute nicht getroffen sind. Kontakt läuft über `site.yaml`
-(`contact:`). *Auslöser:* ein konkreter Kontaktweg mit Datenschutz-Freigabe.
+(`contact:`) und wird von Seiten mit `contact: true` gerendert. *Auslöser:* ein konkreter
+Kontaktweg mit Datenschutz-Freigabe.
 
-**Bildoptimierung und Art Direction.** Keine Transformation, keine Größen, keine Formate.
-Bilder liegen so in `public/assets/`, wie sie geliefert werden. *Auslöser:* Bilder größer als
-der Seitentext oder ein echter Bedarf an responsiven Zuschnitten.
+**Bildoptimierung, Art Direction, Metadatenbereinigung.** Keine Transformation, keine Größen,
+keine Formate, kein EXIF-Entfernen. Bilder liegen so in `public/assets/`, wie sie übergeben
+werden — inklusive der Metadaten, die ein Foto tragen kann. *Auslöser:* Bilder größer als der
+Seitentext, Bedarf an Zuschnitten, oder Material aus Quellen mit eingebetteten Ortsdaten.
 
-**Deployment-Workflows.** Kein Workflow für Pages, Netlify oder S3. Der Build ist eine
-Schublade mit Dateien; die Wahl des Hosts ist noch nicht getroffen. *Auslöser:* Hosting-Entscheidung.
+**Deployment-Workflows und Vorschau pro Branch.** Kein Workflow für Pages, Netlify oder S3,
+keine Deploy-Preview pro Pull Request. Der Build ist eine Schublade mit Dateien; die Wahl des
+Hosts ist offen, und Deployment ist absichtlich ein eigener Schritt (R-20).
+*Auslöser:* Hosting-Entscheidung.
+
+**Erzwungener Control-Plane-Schutz.** `CODEOWNERS` und die Warnung `CONTROL_PLANE_CHANGED`
+sind in diesem Repo vorbereitet, aber eine Datei kann keine Branch Protection einstellen:
+„Require review from code owners" und „Do not allow forced pushes" sind Repository-Einstellungen
+und müssen dort gesetzt werden. Bis dahin ist R-19 eine Regel mit Sichtbarkeit, keine Sperre.
+*Auslöser:* öffentliche Referenzfreigabe dieses Templates.
+
+**Verschattung der Prüfungen (Mutation Testing).** Der Test-Harness beweist, dass jede Regel
+ihren Fehlerfall erwischt. Ein Werkzeug, das mutierte Validator-Versionen gegen die Tests
+laufen lässt, würde die Lücke zeigen, die eine Testliste trotzdem lässt.
+*Auslöser:* eine Regel, die trotz Testfall versagt.
 
 **Mehrere Agenten parallel.** Die Grenze `input/` und die Regel „eine Änderung pro Vorhaben"
 tragen zwei bis drei Agenten. Sperrvermerke, Merge-Konfliktregeln für `site.yaml` und ein
@@ -46,14 +68,20 @@ Review-Zwang sind erst nötig, wenn tatsächlich Kollisionen auftreten. *Auslös
 **Ordnung in `input/`.** Vier Ordner und Konvention. Kein Index, keine Verschlagwortung,
 keine Vorschau auf PDFs. *Auslöser:* Materialbestand, der ohne Suche nicht mehr beherrschbar ist.
 
+## Entschieden (und warum es dabei bleibt)
+
+| Frage | Entscheidung |
+| --- | --- |
+| Astro oder Hugo | Astro — Content-Layer-Schema im Build, Node-Umgebung vorhanden |
+| Lizenz | MIT (`LICENSE`), Versionsstand 0.2.0 |
+| Startseite | ausschließlich `start.md`; `index` reserviert, `slug: /` abgelehnt |
+| `input/` im Repository | standardmäßig nicht getrackt (`input/**`), Ausnahmen nur README und Brief-Vorlage |
+| Schweregrade | `MUST` → Fehler, `SOLL` → Warnung; `--strict` hebt Warnungen auf Blockadestufe |
+| Indexierung | im `lifecycle: development` immer gesperrt; Livegang verlangt `lifecycle: production` |
+| Markdown in Inhalten | verboten (R-22), weil Astro HTML durchlässt und Markdown keine Sandbox ist |
+
 ## Grundsätzliche Schwelle
 
 Neue Abhängigkeiten, neue Skripte und neue Schichten brauchen einen Eintrag hier mit Auslöser —
 und eine Antwort auf die Frage aus `docs/feedback.md`: *Lässt sich das nicht mit dem vorhandenen
 Werkzeug als Konvention statt als Code lösen?*
-
-## Nicht entschieden
-
-**Lizenz.** Dieses Repository hat noch keine Lizenz. Bevor es öffentlich wird, braucht es eine.
-Der Entwurf des Musters nennt Open Source als Haltung; die konkrete Wahl (MIT, Apache-2.0, CC
-für Inhalte) ist eine Entscheidung des Besitzers, keine technische Vorentscheidung.

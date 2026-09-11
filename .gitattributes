@@ -1,0 +1,16 @@
+# Zeilenenden: im Repo und in jedem Checkout LF. Ohne diese Datei erzeugt ein
+# Checkout unter Windows CRLF — und die Builds zweier Maschinen sind nicht mehr
+# byte-identisch (R-12), ohne dass jemand etwas falsch gemacht hätte.
+* text=auto eol=lf
+
+# Generiertes und Binäres ausdrücklich markieren
+dist/** linguist-generated=false
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.avif binary
+*.pdf binary
+*.woff binary
+*.woff2 binary
+*.ttf binary

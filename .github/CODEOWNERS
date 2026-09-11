@@ -1,0 +1,22 @@
+# Inhaber der Control Plane (AGENTS.md R-19).
+#
+# Diese Datei ist eine Vorlage: der Platzhalter unten ist kein gültiger
+# GitHub-Handle. Vor der Referenzfreigabe durch den echten Inhaber ersetzen —
+# eine CODEOWNERS-Datei ohne gültigen Inhaber wirkt nicht und täuscht Schutz vor.
+# Zusammen mit Branch Protection: "Require review from code owners" an.
+#
+# Die Pfadliste ist dieselbe wie CONTROL_PLANE in scripts/check.mjs.
+
+*                                       @ERSETZEN-SIE-DIESEN-HANDLE
+/AGENTS.md                              @ERSETZEN-SIE-DIESEN-HANDLE
+/CLAUDE.md                              @ERSETZEN-SIE-DIESEN-HANDLE
+/scripts/                               @ERSETZEN-SIE-DIESEN-HANDLE
+/tests/                                 @ERSETZEN-SIE-DIESEN-HANDLE
+/.github/                               @ERSETZEN-SIE-DIESEN-HANDLE
+/package.json                           @ERSETZEN-SIE-DIESEN-HANDLE
+/package-lock.json                      @ERSETZEN-SIE-DIESEN-HANDLE
+/.node-version                          @ERSETZEN-SIE-DIESEN-HANDLE
+/astro.config.mjs                       @ERSETZEN-SIE-DIESEN-HANDLE
+/src/content.config.ts                  @ERSETZEN-SIE-DIESEN-HANDLE
+/src/lib/route.mjs                      @ERSETZEN-SIE-DIESEN-HANDLE
+/src/lib/site-schema.mjs                @ERSETZEN-SIE-DIESEN-HANDLE

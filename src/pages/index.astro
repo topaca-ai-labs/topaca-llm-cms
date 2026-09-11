@@ -15,6 +15,11 @@ if (page.data.draft) {
 const { Content } = await render(page);
 ---
 
-<Page title={page.data.title} description={page.data.description} noindex={page.data.noindex}>
+<Page
+  title={page.data.title}
+  description={page.data.description}
+  noindex={page.data.noindex}
+  contact={page.data.contact}
+>
   <Content />
 </Page>

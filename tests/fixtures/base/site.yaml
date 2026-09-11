@@ -1,0 +1,15 @@
+name: "ACME GmbH"
+url: "https://acme.example"
+language: "de"
+lifecycle: development
+nav:
+  - label: Leistungen
+    href: /leistungen/
+  - label: Kontakt
+    href: /kontakt/
+footer:
+  - label: Impressum
+    href: /impressum/
+contact:
+  email: "kontakt@acme.example"
+  phone: "+49 30 123456"

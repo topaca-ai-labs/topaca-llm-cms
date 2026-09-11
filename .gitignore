@@ -5,6 +5,15 @@ dist/
 # Abhängigkeiten
 node_modules/
 
+# Material in input/ ist privat by default (R-04, docs/security.md).
+# Publiziert wird über den Freigabeprozess, committet wird nur die Struktur.
+# Ausnahmen: READMEs und die Brief-Vorlage bleiben sichtbar.
+input/**
+!input/*/
+!input/README.md
+!input/brief.example.md
+!input/*/README.md
+
 # Logs
 npm-debug.log*
 yarn-debug.log*

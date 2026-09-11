@@ -1,16 +1,22 @@
 ---
-import { site } from '../lib/site';
+import { isProduction, site } from '../lib/site';
+import Contact from '../components/contact.astro';
+import { canonical } from '../lib/route.mjs';
 import '../styles/global.css';
 
 type Props = {
   title: string;
   description: string;
   noindex?: boolean;
+  contact?: boolean;
 };
 
-const { title, description, noindex = false } = Astro.props;
-const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).href;
-const current = Astro.url.pathname.replace(/(.+)\/$/, '$1') || '/';
+const { title, description, noindex = false, contact = false } = Astro.props;
+// Sichere Grundhaltung (R-21): im development-Zustand ist die Website nicht
+// indexierbar, auch wenn niemand daran denkt. Erst production schaltet Indexierung frei.
+const robots = noindex || !isProduction ? 'noindex, nofollow' : 'index, follow';
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? site.url).href;
+const current = canonical(Astro.url.pathname) ?? '/';
 const fullName = title === site.name ? site.name : `${title} — ${site.name}`;
 ---
 
@@ -21,11 +27,11 @@ const fullName = title === site.name ? site.name : `${title} — ${site.name}`;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullName}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
-    <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta name="robots" content={robots} />
     <meta property="og:title" content={fullName} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonical} />
+    <meta property="og:url" content={canonicalUrl} />
     <meta property="og:type" content="website" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="sitemap" href="/sitemap.xml" />
@@ -40,7 +46,7 @@ const fullName = title === site.name ? site.name : `${title} — ${site.name}`;
           {
             site.nav.map((item) => (
               <li>
-                <a href={item.href} aria-current={current === item.href.replace(/\/$/, '') ? 'page' : undefined}>
+                <a href={item.href} aria-current={current === canonical(item.href) ? 'page' : undefined}>
                   {item.label}
                 </a>
               </li>
@@ -53,6 +59,7 @@ const fullName = title === site.name ? site.name : `${title} — ${site.name}`;
     <main id="inhalt">
       <h1>{title}</h1>
       <slot />
+      {contact ? <Contact /> : null}
     </main>
 
     <footer class="site-footer">
