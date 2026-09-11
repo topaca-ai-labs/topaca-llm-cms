@@ -10,7 +10,7 @@ Test nachprüfbar. Nichts hier ist eine Absichtserklärung.
 | Empfehlung | Umsetzung | Nachprüfen |
 | --- | --- | --- |
 | „SSG wählen: Astro oder Hugo liefert Build, Preview, Frontmatter-Validierung und reproduzierbare Ausgabe gratis" | Astro 7, keine eigene Compiler-Schicht, Frontmatter als Pflichtfeld-Schema | `npm run build`, `src/content.config.ts` |
-| „`AGENTS.md` ins Repo: Struktur, Regeln, No-Go-Behauptungen, Validierungskommandos" | `AGENTS.md` mit 22 Regeln fester ID, Schichten, Befehlen, Prüf-Katalog, Release-Liste | `AGENTS.md` §1–§7 |
+| „`AGENTS.md` ins Repo: Struktur, Regeln, No-Go-Behauptungen, Validierungskommandos" | `AGENTS.md` mit 22 Regeln fester ID, Schichten, Befehlen, Prüf-Katalog, Release-Liste | `AGENTS.md` §1–§8 |
 | „`input/`-Konvention: nichts ungeprüft in `content/`" | `input/` mit README, Vertrauensgrenze R-04, Prüfungen `INPUT_IN_PUBLIC`, `INPUT_IN_DIST`, `INPUT_IDENTICAL_FILE`, `INPUT_TRACKED` | `tests/validator.test.mjs` → *Vertrauensgrenze* |
 | „Deterministische Checks plus CI als Reparatur-Loop" | `npm run validate`, `npm run build`, `npm test`; CI führt dieselben Befehle | `.github/workflows/validate.yml` |
 | „Beliebigen Agenten anschließen, Wechsel des Modells funktioniert" | R-02, R-16: Zustand nur in Dateien, kein Sitzungswissen, keine Modellannahme im Build | `AGENTS.md` R-02, R-16 |
@@ -36,7 +36,7 @@ Test nachprüfbar. Nichts hier ist eine Absichtserklärung.
 | P1-01 Input ist untrusted data, nie Anweisung | R-18 in `AGENTS.md`, `docs/security.md` §2 mit Beispielformulierung | Regeltext; Prüfbarkeit ist begrenzt und wird so benannt |
 | P1-02 Control Plane vom Website-State trennen | Schicht „Control Plane" in `AGENTS.md` §1, `docs/architecture.md` §3, `docs/security.md` §3 | `CONTROL_PLANE`-Liste in `scripts/check.mjs` |
 | P1-03 Agent darf Validator/AGENTS/CI nicht ungeprüft ändern | R-19; jede Änderung an diesen Pfaden meldet `CONTROL_PLANE_CHANGED` (Warnung, `--strict` blockierend) | `tests/validator.test.mjs` (git-basierte Fixture) |
-| P1-04 Repository-Privacy und Website-Privacy getrennt | `docs/security.md` §1, `AGENTS.md` §1a, `input/README.md` | zwei getrennte Prüfungen: `INPUT_IN_DIST` vs. `INPUT_TRACKED` |
+| P1-04 Repository-Privacy und Website-Privacy getrennt | `docs/security.md` §1, `AGENTS.md` §2, `input/README.md` | zwei getrennte Prüfungen: `INPUT_IN_DIST` vs. `INPUT_TRACKED` |
 | P1-05 privates Material standardmäßig nicht committen | `.gitignore`: `input/**` mit Ausnahmen für README/`brief.example.md`; `INPUT_TRACKED` blockiert im `lifecycle: production` | `tests/validator.test.mjs` → *getracktes Material* |
 | P1-06 URL-Normalisierung vereinheitlichen | eine Autorität `src/lib/route.mjs`; Layout, Renderer und Validator rufen dieselben Funktionen | `docs/architecture.md` §3, `tests/route.test.mjs` (45 Fälle) |
 | P1-07 Query/Fragment korrigieren | `splitTarget()` trennt Pfad, Query, Fragment vor jedem Vergleich | `tests/route.test.mjs`, `tests/validator.test.mjs` → *Fragment/Query* |
@@ -45,7 +45,7 @@ Test nachprüfbar. Nichts hier ist eine Absichtserklärung.
 | P1-10 `site.yaml` vollständig schemavalidieren | `src/lib/site-schema.mjs` (Zod, `strict()`): unbekannte Felder, Typen, kanonische hrefs, erlaubte `lifecycle`-Werte | `tests/validator.test.mjs` → *Konfiguration site.yaml* |
 | P1-11 Startseitenvertrag | ausschließlich `start.md`; `index` reserviert; `slug: /` abgelehnt; Renderer und Validator nutzen dieselbe Funktion | `NO_START_PAGE`, `SLUG_RESERVED`, `RESERVED_FILENAME` |
 | P1-12 Slug-Kanonisierung | `slug` muss kanonisch sein (`/leistung/`), sonst `SLUG_INVALID`; der Renderer normalisiert trotzdem, damit niemals `leistungindex.html` entsteht | `tests/route.test.mjs`, `SLUG_INVALID` |
-| P1-13 MUST → Error konsequent | `MUST` → `error()`, `SOLL` → `warn()`; `EMPTY_ALT` von Warnung auf Fehler gesetzt | `AGENTS.md` §3, `tests/validator.test.mjs` → *leerer Alt-Text* |
+| P1-13 MUST → Error konsequent | `MUST` → `error()`, `SOLL` → `warn()`; `EMPTY_ALT` von Warnung auf Fehler gesetzt | `AGENTS.md` §4, `tests/validator.test.mjs` → *leerer Alt-Text* |
 | P1-14 Lifecycle `development/production` | `site.yaml lifecycle`, steuert `gate()`, robots, noindex, Platzhalter | `src/pages/robots.txt.ts`, `LIFECYCLE_NOT_PRODUCTION` |
 | P1-15 Template standardmäßig `noindex` | development: `noindex, nofollow` auf jeder Seite und `Disallow: /`; `public/robots.txt` gelöscht, Route erzeugt sie | `tests/build.test.mjs` → *nicht indexierbar*, `INDEXABLE_IN_DEVELOPMENT` |
 

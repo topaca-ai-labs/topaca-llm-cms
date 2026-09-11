@@ -15,16 +15,6 @@ Der Build ist wegwerfbar.
 Der Mensch entscheidet über Inhalt und Positionierung. Der Agent entscheidet über
 Mechanik, Kohärenz und Sauberkeit — und schlägt vor, statt still zu ändern.
 
-## 1a. Zwei Grenzen, die niemand verwechseln darf
-
-| Grenze | Was öffentlich wird | Wer sie setzt |
-| --- | --- | --- |
-| **Website** | was im Build landet | `src/`, `public/`, `lifecycle` (R-04, R-21) |
-| **Repository** | was jeder auf dem Hosting-Dienst liest | `.gitignore`, Repo-Sichtbarkeit (R-04) |
-
-`input/` ist deshalb standardmäßig ignoriert. `git add .` lädt kein Rohtext-Material
-hoch. Siehe `docs/security.md`.
-
 ## 1. Schichten
 
 | Schicht | Ort | Regel |
@@ -37,7 +27,17 @@ hoch. Siehe `docs/security.md`.
 Der Zustand liegt in Dateien, nicht in einer Datenbank und nicht im Kopf eines Modells.
 Wenn ein Modell fehlt, ist die Website trotzdem vollständig erklärbar.
 
-## 2. Arbeitszyklus
+## 2. Zwei Grenzen, die niemand verwechseln darf
+
+| Grenze | Was öffentlich wird | Wer sie setzt |
+| --- | --- | --- |
+| **Website** | was im Build landet | `src/`, `public/`, `lifecycle` (R-04, R-21) |
+| **Repository** | was jeder auf dem Hosting-Dienst liest | `.gitignore`, Repo-Sichtbarkeit (R-04) |
+
+`input/` ist deshalb standardmäßig ignoriert. `git add .` lädt kein Rohtext-Material
+hoch. Siehe `docs/security.md`.
+
+## 3. Arbeitszyklus
 
 ```text
 1. AGENTS.md lesen
@@ -54,7 +54,7 @@ Wenn ein Modell fehlt, ist die Website trotzdem vollständig erklärbar.
 Ein Durchlauf ist erst fertig, wenn `validate`, `build` und `test` fehlerfrei sind.
 Exit-Code `2` bedeutet: gar nichts wurde geprüft (Aufruf fehlerhaft) — das ist kein Erfolg.
 
-## 3. Regeln
+## 4. Regeln
 
 `MUST` = hart, Verletzung blockiert. `SOLL` = starke Vorgabe, Abweichung im Bericht nennen.
 Regel-IDs sind anhängend; bestehende IDs werden nie umnummeriert.
@@ -175,7 +175,7 @@ enthalten deshalb kein HTML, kein `<script>`, `<iframe>`, `<form>`, keine `javas
 und keine Event-Handler (`UNSAFE_MARKDOWN`). Was als Darstellung gemeint ist, gehört in das
 Layout oder in eine Komponente — und beides ist Control Plane (R-19). `MUST`
 
-## 4. Befehle
+## 5. Befehle
 
 | Befehl | Wirkung |
 | --- | --- |
@@ -192,10 +192,10 @@ Layout oder in eine Komponente — und beides ist Control Plane (R-19). `MUST`
 
 Exit-Codes: `0` in Ordnung, `1` blockiert, `2` fehlerhafter Aufruf — bei `2` wurde
 nichts geprüft. Warnungen stehen für inhaltliche Unvollständigkeit (SOLL), Fehler für
-mechanische Bruchstellen und MUST-Verletzungen (siehe §3). Alle Diagnosen haben stabile
+mechanische Bruchstellen und MUST-Verletzungen (siehe §4). Alle Diagnosen haben stabile
 Codes und sind mit `--json` maschinenlesbar.
 
-## 5. Was geprüft wird
+## 6. Was geprüft wird
 
 **Quellenzustand:** `site.yaml` gegen ein Schema mit erlaubten Feldern (unbekanntes Feld =
 Fehler), Pflichtfelder und Länge des Frontmatters, Dateinamen und alle Pfadsegmente,
@@ -220,7 +220,7 @@ Der Hash-Vergleich mit `input/` erkennt **vollständig identische** Dateien. Ein
 Zeile entgeht ihm. Er ist eine Absicherung gegen bequemes Kopieren, keine Datenlecksuche —
 das steht in der Diagnose dazu (`docs/security.md`).
 
-## 6. Vor dem Livegang
+## 7. Vor dem Livegang
 
 - [ ] `npm run check:release` fehlerfrei — verlangt `lifecycle: production` (R-21)
 - [ ] `npm test` grün
@@ -232,7 +232,7 @@ das steht in der Diagnose dazu (`docs/security.md`).
 - [ ] Repository ist privat oder bewusst öffentlich: kein getracktes Material in `input/` (R-04)
 - [ ] `dist/` wird deployt, niemals verändert (R-03)
 
-## 7. Wenn es nicht weitergeht
+## 8. Wenn es nicht weitergeht
 
 Semantische Konflikte — Positionierung, Tonalität, was über eine Person gesagt werden darf,
 welche Aussage auf die Startseite gehört — entscheidet der Mensch. Der Agent formuliert dazu

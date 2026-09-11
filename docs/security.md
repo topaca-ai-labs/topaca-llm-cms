@@ -103,7 +103,7 @@ kann kein Check beweisen.**
 | `check:release` | MUST-Regeln erfüllt, `lifecycle: production` | rechtliche Korrektheit (R-13, Mensch) |
 
 Eine Warnung ist eine Freigabefrage, kein Fehler. Ein Fehler ist eine mechanische
-Bruchstelle. Beides ist absichtlich verschieden (AGENTS.md §3).
+Bruchstelle. Beides ist absichtlich verschieden (AGENTS.md §4).
 
 ## 6. Indexierung (R-21)
 
