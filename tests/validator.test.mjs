@@ -5,7 +5,7 @@
  *
  * Jeder Fall verlangt eine benannte Diagnose an der richtigen Stelle. Ein Test,
  * der nur "Exit ungleich 0" prüft, beweist nichts: ein fehlendes Verzeichnis
- * sieht genauso aus wie ein erkannte Regelverletzung. Deshalb:
+ * sieht genauso aus wie eine erkannte Regelverletzung. Deshalb:
  *
  *   erwartet wird  exit 1  +  { code, file, line, severity }
  *
@@ -17,7 +17,6 @@
  */
 
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { describe, it } from 'node:test';
 import { append, assertBlocked, assertClean, assertWarns, diagnostics, fixture, git, MATERIAL, pageHtml, patch, remove, REPO, run, write, writeDist } from './helpers.mjs';
