@@ -1,24 +1,30 @@
 # Inhaber der Control Plane (AGENTS.md R-19).
 #
-# Inhaber des Templates: Markus Ertel, TOPACA AI Labs (Copyright © 2026, siehe LICENSE).
+# Inhaber: Markus Ertel (@markus-ertel), TOPACA AI Labs (@topaca-ai-labs).
+# Copyright © 2026, siehe LICENSE.
 #
-# Diese Datei ist eine Vorlage: der Platzhalter unten ist kein gültiger GitHub-Handle.
-# Vor der Referenzfreigabe durch den echten Handle des Inhabers ersetzen — eine
-# CODEOWNERS-Datei ohne gültigen Inhaber wirkt nicht und täuscht Schutz vor.
-# Zusammen mit Branch Protection: "Require review from code owners" an.
+# @topaca-ai-labs ist die Organisation. GitHub akzeptiert in dieser Datei keine
+# Organisation als Inhaber, sondern nur Personen und Teams. Org-weite Inhaberschaft
+# braucht deshalb ein Team (z. B. @topaca-ai-labs/<team>); es ist hier nicht
+# eingetragen, weil es noch nicht angelegt ist — eine erfundene Team-Kennung
+# würde stillschweigend ins Leere zeigen.
+#
+# Damit das hier tatsächlich etwas verhindert, in den Repository-Einstellungen:
+# Branch Protection auf dem Zielzweig → "Require review from code owners" und
+# "Do not allow forced pushes". Eine Datei kann das nicht einstellen (R-19).
 #
 # Die Pfadliste ist dieselbe wie CONTROL_PLANE in scripts/check.mjs.
 
-*                                       @ERSETZEN-SIE-DIESEN-HANDLE
-/AGENTS.md                              @ERSETZEN-SIE-DIESEN-HANDLE
-/CLAUDE.md                              @ERSETZEN-SIE-DIESEN-HANDLE
-/scripts/                               @ERSETZEN-SIE-DIESEN-HANDLE
-/tests/                                 @ERSETZEN-SIE-DIESEN-HANDLE
-/.github/                               @ERSETZEN-SIE-DIESEN-HANDLE
-/package.json                           @ERSETZEN-SIE-DIESEN-HANDLE
-/package-lock.json                      @ERSETZEN-SIE-DIESEN-HANDLE
-/.node-version                          @ERSETZEN-SIE-DIESEN-HANDLE
-/astro.config.mjs                       @ERSETZEN-SIE-DIESEN-HANDLE
-/src/content.config.ts                  @ERSETZEN-SIE-DIESEN-HANDLE
-/src/lib/route.mjs                      @ERSETZEN-SIE-DIESEN-HANDLE
-/src/lib/site-schema.mjs                @ERSETZEN-SIE-DIESEN-HANDLE
+*                                       @markus-ertel
+/AGENTS.md                              @markus-ertel
+/CLAUDE.md                              @markus-ertel
+/scripts/                               @markus-ertel
+/tests/                                 @markus-ertel
+/.github/                               @markus-ertel
+/package.json                           @markus-ertel
+/package-lock.json                      @markus-ertel
+/.node-version                          @markus-ertel
+/astro.config.mjs                       @markus-ertel
+/src/content.config.ts                  @markus-ertel
+/src/lib/route.mjs                      @markus-ertel
+/src/lib/site-schema.mjs                @markus-ertel

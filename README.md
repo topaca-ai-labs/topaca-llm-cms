@@ -143,8 +143,10 @@ freigegebener Schritt (R-20).
 
 ## Lizenz und Inhaberschaft
 
-Copyright © 2026 Markus Ertel, TOPACA AI Labs. Der Code dieses Templates steht unter MIT,
-siehe [`LICENSE`](LICENSE); `package.json` nennt dieselbe Inhaberschaft.
+Copyright © 2026 Markus Ertel ([@markus-ertel]), TOPACA AI Labs ([@topaca-ai-labs]). Der Code
+dieses Templates steht unter MIT, siehe [`LICENSE`](LICENSE). `package.json` nennt den Autor,
+`.github/CODEOWNERS` den Inhaber der Control Plane; Commits sind mit der GitHub-Kennung
+`@markus-ertel` authorisiert.
 
 Die Texte in `docs/llm-cms.md`, `docs/feedback.md` und dem Audit-Dokument sind
 Ausgangsmaterial und nicht Teil dieser Lizenz. Welche Lizenz auf ihnen liegt, entscheidet

@@ -49,11 +49,13 @@ keine Deploy-Preview pro Pull Request. Der Build ist eine Schublade mit Dateien;
 Hosts ist offen, und Deployment ist absichtlich ein eigener Schritt (R-20).
 *Auslöser:* Hosting-Entscheidung.
 
-**Erzwungener Control-Plane-Schutz.** `CODEOWNERS` und die Warnung `CONTROL_PLANE_CHANGED`
-sind in diesem Repo vorbereitet, aber eine Datei kann keine Branch Protection einstellen:
-„Require review from code owners" und „Do not allow forced pushes" sind Repository-Einstellungen
-und müssen dort gesetzt werden. Bis dahin ist R-19 eine Regel mit Sichtbarkeit, keine Sperre.
-*Auslöser:* öffentliche Referenzfreigabe dieses Templates.
+**Erzwungener Control-Plane-Schutz.** `CODEOWNERS` (Inhaber: @markus-ertel) und die Warnung
+`CONTROL_PLANE_CHANGED` sind vorbereitet, aber eine Datei kann keine Branch Protection
+einstellen: „Require review from code owners" und „Do not allow forced pushes" sind
+Repository-Einstellungen und müssen dort gesetzt werden. Org-weite Inhaberschaft braucht
+zudem ein Team unter @topaca-ai-labs — eine Organisation ist in `CODEOWNERS` kein gültiger
+Inhaber. Bis dahin ist R-19 eine Regel mit Sichtbarkeit, keine Sperre.
+*Auslöser:* Repo auf GitHub anlegen, Team und Branch Protection setzen.
 
 **Verschattung der Prüfungen (Mutation Testing).** Der Test-Harness beweist, dass jede Regel
 ihren Fehlerfall erwischt. Ein Werkzeug, das mutierte Validator-Versionen gegen die Tests
