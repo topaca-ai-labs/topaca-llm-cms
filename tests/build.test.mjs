@@ -14,7 +14,7 @@
  */
 
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync, rmSync } from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { after, before, describe, it } from 'node:test';
@@ -35,12 +35,28 @@ const checkDist = (args = []) => {
 };
 const distFile = (rel) => readFileSync(path.join(REPO, 'dist', rel), 'utf8');
 
+/**
+ * macOS legt `.DS_Store` ab, sobald ein Ordner im Finder geöffnet wird — auch im
+ * frischen Build. Diese Tests prüfen die Werkzeugkette, nicht das Betriebssytem.
+ * Der Validator meldet `.DS_Store` in `dist/` weiterhin als FORBIDDEN_DIST_FILE
+ * (tests/validator.test.mjs), und `npm run reproducible` lässt sie nicht durch.
+ */
+function purgeFinderArtifacts(dir) {
+  if (!existsSync(dir)) return;
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const p = path.join(dir, entry.name);
+    if (entry.isDirectory()) purgeFinderArtifacts(p);
+    else if (entry.name === '.DS_Store') rmSync(p, { force: true });
+  }
+}
+
 describe('Build des Referenzprojekts', { skip: haveAstro ? false : 'astro nicht installiert — npm ci' }, () => {
   let site;
   before(() => {
     site = load(readFileSync(path.join(REPO, 'site.yaml'), 'utf8'));
     const build = run(ASTRO, ['build']);
     assert.equal(build.status, 0, `astro build fehlgeschlagen:\n${build.stdout}\n${build.stderr}`);
+    purgeFinderArtifacts(path.join(REPO, 'dist'));
   });
 
   after(() => {
