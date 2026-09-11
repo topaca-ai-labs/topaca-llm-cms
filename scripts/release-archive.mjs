@@ -1,69 +1,69 @@
 #!/usr/bin/env node
 /**
- * Release-Archiv (AGENTS.md R-03, R-21).
+ * Erzeugt ein Release-Archiv aus einem Commit — nicht aus dem Arbeitsverzeichnis.
  *
- *   npm run release:archive
- *
- * Ein Archiv entsteht aus einem Commit, nie aus einem Ordner im Finder. Damit
- * ist ausgeschlossen, was in v0.1 passiert ist: ein Projektordner mit
- * `node_modules/`, `.git/`, `dist/`, `.astro/` und `.DS_Store`, auf einer
- * anderen Maschine unbrauchbar und 134 MB groß.
- *
- * Das Skript erzeugt das Archiv mit `git archive` und prüft es danach:
- * kein installierter Zustand, keine generierten Dateien, keine Metadaten,
- * eine Lizenz.
+ * Ein Archiv, das versehentlich `node_modules/` enthält (79 MB, 22.000 Dateien),
+ * ist kein Template. Deshalb: `git archive` aus einem sauberen Commit, danach
+ * den Inhalt prüfen. Veröffentlichen bleibt ein Schritt des Menschen (R-20).
  */
-
 import { execFileSync } from 'node:child_process';
-import { existsSync, readFileSync, statSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { mkdirSync, readFileSync, rmSync, statSync } from 'node:fs';
 import path from 'node:path';
 
 const ROOT = process.cwd();
-const FORBIDDEN = [
-  { re: /(^|\/)node_modules\//, why: 'installierte Abhängigkeiten' },
-  { re: /(^|\/)\.git\//, why: 'Repository-interne Daten' },
-  { re: /(^|\/)dist\//, why: 'Build-Ausgabe' },
-  { re: /(^|\/)\.astro\//, why: 'generierte Dateien' },
-  { re: /(^|\/)\.DS_Store$/, why: 'macOS-Metadaten' },
-  { re: /^__MACOSX/, why: 'macOS-Archivmüll' },
-];
+const OUT_DIR = path.join(ROOT, '.release'); // gitignored, überlebt einen Build
+const REQUIRED = ['LICENSE', 'README.md', 'AGENTS.md', 'package-lock.json'];
+const FORBIDDEN = [/^node_modules\//, /^\.git\//, /^dist\//, /^\.astro\//, /\.DS_Store$/, /^__MACOSX/];
 
-const git = (args) => execFileSync('git', args, { cwd: ROOT, encoding: 'utf8' });
-
-const name = JSON.parse(readFileSync(path.join(ROOT, 'package.json'), 'utf8')).name;
-const version = JSON.parse(readFileSync(path.join(ROOT, 'package.json'), 'utf8')).version;
-
-const dirty = git(['status', '--porcelain']).trim();
-if (dirty) {
-  console.error('✗ Arbeitsverzeichnis ist nicht sauber. Ein Release entsteht aus einem Commit:');
-  console.error(dirty.split('\n').slice(0, 8).map((l) => `    ${l}`).join('\n'));
+function fail(msg) {
+  console.error(`\nRelease-Archiv blockiert: ${msg}`);
   process.exit(1);
 }
 
-const required = ['LICENSE', 'README.md', 'AGENTS.md', 'package-lock.json'];
-const missing = required.filter((f) => !git(['ls-files', f]).trim());
-if (missing.length) {
-  console.error(`✗ fehlt im Commit: ${missing.join(', ')} — ohne Lizenz ist das kein offenes Template`);
-  process.exit(1);
+function git(...args) {
+  try {
+    return execFileSync('git', args, { cwd: ROOT, encoding: 'utf8' }).trim();
+  } catch (e) {
+    fail(`git ${args.join(' ')} schlug fehl: ${e.stderr ?? e.message}`);
+  }
 }
 
-const out = path.join(path.dirname(ROOT), `${name}-${version}.tar.gz`);
-git(['archive', '--format=tar.gz', `--prefix=${name}/`, '-o', out, 'HEAD']);
+if (!git('rev-parse', '--is-inside-work-tree')) fail('kein Git-Repository');
+const dirty = git('status', '--porcelain');
+if (dirty) fail(`Arbeitsverzeichnis ist nicht sauber — das Archiv kommt aus einem Commit:\n${dirty}`);
 
-const listing = execFileSync('tar', ['-tzf', out], { encoding: 'utf8' }).split('\n').filter(Boolean);
-const violations = [];
-for (const entry of listing) {
-  const hit = FORBIDDEN.find((f) => f.re.test(entry));
-  if (hit) violations.push(`${entry} — ${hit.why}`);
+const commit = git('rev-parse', '--short', 'HEAD');
+const tracked = new Set(git('ls-files').split('\n'));
+const missing = REQUIRED.filter((f) => !tracked.has(f));
+if (missing.length) fail(`Pflichtdateien nicht committet: ${missing.join(', ')}`);
+
+const version = JSON.parse(git('show', 'HEAD:package.json')).version ?? 'dev';
+const prefix = `llm-cms-${version}-${commit}`;
+const archive = path.join(OUT_DIR, `${prefix}.tar.gz`);
+
+mkdirSync(OUT_DIR, { recursive: true });
+rmSync(archive, { force: true });
+git('archive', '--format=tar.gz', `--prefix=${prefix}/`, '-o', archive, 'HEAD');
+
+// Der Inhalt entscheidet, nicht die Absicht.
+const listing = execFileSync('tar', ['-tzf', archive], { cwd: ROOT, encoding: 'utf8' })
+  .split('\n')
+  .filter(Boolean);
+const roots = new Set(listing.map((n) => n.split('/')[0]));
+if (roots.size !== 1) fail(`Archiv hat ${roots.size} Wurzelverzeichnisse, erwartet wird eines: ${[...roots].join(', ')}`);
+
+const rel = (n) => n.replace(/^[^/]+\//, '');
+const offenders = listing.filter((n) => FORBIDDEN.some((re) => re.test(rel(n))));
+if (offenders.length) fail(`Archiv enthält Unerwünschtes: ${offenders.slice(0, 5).join(', ')}`);
+for (const req of REQUIRED) {
+  if (!listing.some((n) => rel(n) === req)) fail(`Archiv enthält nicht ${req}`);
 }
+if (listing.some((n) => rel(n).startsWith('../') || n.startsWith('/'))) fail('Archiv enthält Pfade außerhalb der Wurzel');
 
-const size = (statSync(out).size / 1024).toFixed(1);
-if (violations.length) {
-  console.error(`✗ Archiv enthält Unerwünschtes (${violations.length}):`);
-  console.error(violations.slice(0, 10).map((v) => `    ${v}`).join('\n'));
-  process.exit(1);
-}
-
-console.log(`Archiv: ${out}`);
-console.log(`  ${listing.length} Einträge, ${size} kB, erzeugt aus ${git(['rev-parse', '--short', 'HEAD']).trim()}`);
-console.log('  frei von node_modules, .git, dist, .astro und Metadaten');
+const bytes = readFileSync(archive);
+console.log(`\nArchiv: ${archive}`);
+console.log(`  ${listing.length} Einträge, ${(statSync(archive).size / 1024).toFixed(1)} kB, erzeugt aus ${commit}`);
+console.log(`  Wurzel: ${[...roots][0]}/ — frei von node_modules, .git, dist, .astro und Metadaten`);
+console.log(`  sha256: ${createHash('sha256').update(bytes).digest('hex')}`);
+console.log('  Prüfen: tar -tzf <archiv> · Veröffentlichen ist ein eigener Schritt (R-20)');
