@@ -346,7 +346,7 @@ if (MODE === 'source') {
         'R-06',
         page.rel,
         page.fmError ? `Frontmatter-YAML fehlerhaft: ${page.fmError}` : 'Frontmatter fehlt',
-        { hint: 'Vorlage: docs/seitenvorlage.md' },
+        { hint: 'Vorlage: docs/page-template.md' },
       );
       continue;
     }
@@ -577,7 +577,7 @@ if (MODE === 'source') {
   // das Repository selbst, nicht die Website.
   const trackedInput = (git('ls-files', 'input/') ?? '')
     .split('\n')
-    .filter((f) => f && !/(^|\/)(README\.md|brief\.example\.md)$/.test(f));
+    .filter((f) => f && !/(^|\/)(README|brief\.example)(\.de)?\.md$/.test(f));
   if (trackedInput.length) {
     // Eine Diagnose pro Datei: die Entscheidung über die zweite Publikations-
     // grenze wird je Materialstück getroffen, nicht für den Ordner pauschal.

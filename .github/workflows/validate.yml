@@ -1,11 +1,11 @@
 name: validate
 
-# Der CI-Loop ist der Reparatur-Loop des Agenten: dieselben Befehle, dieselbe
-# Reihenfolge, lokal ausführbar. Keine Prüfung, die es lokal nicht gibt.
+# The CI loop is the agent's repair loop: same commands, same order, runnable
+# locally. No check that does not exist locally.
 #
-# Aktionen sind auf vollständige Commit-SHAs gepinnt. Ein Tag wie `v4` kann von
-# jemandem mit Schreibrecht auf dem Aktions-Repository verschoben werden; eine SHA
-# nicht. Die Versionsnummer steht im Kommentar, damit ein Upgrade lesbar bleibt.
+# Actions are pinned to full commit SHAs. A tag such as `v4` can be moved by
+# someone with write access to the action repository; a SHA cannot. The version
+# number stays in the comment so that an upgrade remains readable.
 
 on:
   push:
@@ -21,13 +21,13 @@ concurrency:
 
 jobs:
   validate:
-    name: Referenzumgebung (Node aus .node-version)
+    name: Reference environment (Node from .node-version)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          # Die Control-Plane-Prüfung vergleicht gegen die Basis des Pull Requests.
-          # Ein flacher Clone hätte diese Basis nicht.
+          # The control-plane check compares against the base of the pull
+          # request. A shallow clone would not have that base.
           fetch-depth: 0
 
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
@@ -35,10 +35,10 @@ jobs:
           node-version-file: .node-version
           cache: npm
 
-      - name: Abhängigkeiten (exakt aus dem Lockfile, kein npx im Build)
+      - name: Dependencies (exactly from the lockfile, no npx in the build)
         run: npm ci
 
-      - name: Quellen prüfen
+      - name: Check the sources
         env:
           CHECK_BASE_REF: ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || (github.event_name == 'push' && format('{0}~1', github.sha) || '') }}
         run: |
@@ -49,11 +49,11 @@ jobs:
             const d = JSON.parse(require("fs").readFileSync("/tmp/source.json", "utf8"));
             const cp = d.diagnostics.filter((x) => x.code === "CONTROL_PLANE_CHANGED");
             if (cp.length) {
-              console.log("::notice title=Control Plane geändert (R-19)::" + cp[0].message + " — diese Dateien brauchen eine menschliche Prüfung, siehe docs/security.md");
+              console.log("::notice title=Control plane changed (R-19)::" + cp[0].message + " — these files need a human review, see docs/security.md");
             }
           '
 
-      - name: Bauen und Ausgabe prüfen
+      - name: Build and check the output
         run: |
           set -o pipefail
           ./node_modules/.bin/astro build
@@ -62,14 +62,14 @@ jobs:
             const d = JSON.parse(require("fs").readFileSync("/tmp/dist.json", "utf8"));
             const robots = require("fs").readFileSync("dist/robots.txt", "utf8");
             if (!/^Disallow: \//m.test(robots)) {
-              console.log("::error title=Template indexierbar::robots.txt sperrt die Indexierung nicht, obwohl lifecycle development ist (R-21)");
+              console.log("::error title=Template indexable::robots.txt does not block indexing although lifecycle is development (R-21)");
             }
           '
 
-      - name: Tests (Contract, Einheiten, Build)
+      - name: Tests (contract, units, build)
         run: npm test
 
-      - name: Wiederholbarkeit nachweisen
+      - name: Prove reproducibility
         run: npm run reproducible
 
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -79,8 +79,8 @@ jobs:
           retention-days: 7
           if-no-files-found: error
 
-  kompatibilitaet:
-    name: Kompatibilität Node 22 (untere Grenze aus engines)
+  compatibility:
+    name: Compatibility Node 22 (lower bound from engines)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -91,14 +91,14 @@ jobs:
           cache: npm
 
       - run: npm ci
-      - name: validate, build, test auf der unteren unterstützten Version
+      - name: validate, build, test on the lowest supported version
         run: |
           npm run validate
           npm run build
           npm test
 
   release:
-    name: Release-Archiv ist sauber
+    name: Release archive is clean
     runs-on: ubuntu-latest
     if: github.event_name != 'pull_request'
     steps:
@@ -112,5 +112,5 @@ jobs:
           cache: npm
 
       - run: npm ci
-      - name: Archiv aus dem Commit bauen und Inhalt prüfen
+      - name: Build the archive from the commit and check its content
         run: npm run release:archive

@@ -2,7 +2,7 @@
   "name": "topaca-llm-cms",
   "version": "0.2.0",
   "private": true,
-  "description": "LLM-CMS Minimalvariante: Astro-Template + AGENTS.md + input/-Vertrauensgrenze + deterministische Validator-Diagnosen",
+  "description": "LLM-CMS minimal variant: Astro template + AGENTS.md + input/ trust boundary + deterministic validator diagnostics",
   "type": "module",
   "license": "MIT",
   "author": {
