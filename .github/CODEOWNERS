@@ -1,19 +1,21 @@
-# Inhaber der Control Plane (AGENTS.md R-19).
+# Owners of the control plane (AGENTS.md R-19).
 #
-# Inhaber: Markus Ertel (@markus-ertel), TOPACA AI Labs (@topaca-ai-labs).
-# Copyright © 2026, siehe LICENSE.
+# Owner: Markus Ertel (@markus-ertel), TOPACA AI Labs (@topaca-ai-labs).
+# Copyright © 2026, see LICENSE. All code and all texts in this repository are by
+# the same author.
 #
-# @topaca-ai-labs ist die Organisation. GitHub akzeptiert in dieser Datei keine
-# Organisation als Inhaber, sondern nur Personen und Teams. Org-weite Inhaberschaft
-# braucht deshalb ein Team (z. B. @topaca-ai-labs/<team>); es ist hier nicht
-# eingetragen, weil es noch nicht angelegt ist — eine erfundene Team-Kennung
-# würde stillschweigend ins Leere zeigen.
+# @topaca-ai-labs is the organization. GitHub accepts only persons and teams as
+# owners in this file, never an organization, so organization-wide ownership needs
+# a team (for example @topaca-ai-labs/<team>). None is listed here because none
+# exists yet — an invented team handle would silently point at nothing.
 #
-# Damit das hier tatsächlich etwas verhindert, in den Repository-Einstellungen:
-# Branch Protection auf dem Zielzweig → "Require review from code owners" und
-# "Do not allow forced pushes". Eine Datei kann das nicht einstellen (R-19).
+# State of the settings a file cannot set (R-19): branch protection on `main` is
+# enabled — three required status checks, pull request before merging, no forced
+# pushes, no deletion. "Require review from code owners" is still off, because the
+# only code owner is also the author and the flag would then block that author's
+# own merges; it goes on together with the team.
 #
-# Die Pfadliste ist dieselbe wie CONTROL_PLANE in scripts/check.mjs.
+# The path list is the same list as CONTROL_PLANE in scripts/check.mjs.
 
 *                                       @markus-ertel
 /AGENTS.md                              @markus-ertel
