@@ -21,7 +21,7 @@
     "check": "npm run validate && npm run build",
     "check:strict": "astro sync && node scripts/check.mjs source --strict && node scripts/check.mjs dist --strict",
     "check:release": "npm run build && node scripts/check.mjs source --release && node scripts/check.mjs dist --release",
-    "test": "node --test tests/",
+    "test": "node --test \"tests/*.test.mjs\"",
     "reproducible": "node scripts/reproducible.mjs",
     "release:archive": "node scripts/release-archive.mjs",
     "astro": "astro"
