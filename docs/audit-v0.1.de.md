@@ -1,6 +1,8 @@
 # TOPACA LLM-CMS Minimalvariante  
 ## Architecture & Implementation Audit v0.1
 
+**Sprachen:** [English](audit-v0.1.md) (englische Kurzfassung) · Deutsch (dieses Dokument ist der vollständige Originaltext)
+
 **Audit-Datum:** 10. September 2026  
 **Audit-Gegenstand:** `topaca-llm-cms.zip`  
 **Referenz:** `llm-cms.md` – LLM-CMS Pattern  
@@ -290,7 +292,7 @@ TEST = ✓
 
 Das ist ein klassischer **False Positive im Test-Harness**.
 
-Und das ist besonders problematisch, weil `docs/umsetzung.md` behauptet:
+Und das ist besonders problematisch, weil `docs/umsetzung.de.md` behauptet:
 
 > „Negativfälle ... beweisen, dass die Checks greifen.“
 
@@ -1497,7 +1499,7 @@ Aber unnötige interne Dokumentation gehört nicht in den öffentlich ausgeliefe
 Dokumentation beispielsweise:
 
 ```text
-docs/assets.md
+docs/assets.de.md
 ```
 
 Keine README in `public/`.
@@ -1864,7 +1866,7 @@ eine tatsächliche Systeminvariante.
 
 # 35. Open-Source-Blocker: Es gibt keine Lizenz
 
-`docs/roadmap.md` erkennt diesen Punkt selbst korrekt.
+`docs/roadmap.de.md` erkennt diesen Punkt selbst korrekt.
 
 Für ein Projekt, das ausdrücklich als:
 

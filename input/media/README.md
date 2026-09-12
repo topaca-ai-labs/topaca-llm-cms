@@ -1,1 +1,4 @@
-Ablage für media. Diese Dateien sind Rohtext: sie werden nicht veröffentlicht, sondern vom Agenten interpretiert (AGENTS.md R-04).
+Storage for media. These files are raw text: they are not published, but interpreted by the
+agent (AGENTS.md R-04).
+
+**Languages:** English (default) · [Deutsch](README.de.md)

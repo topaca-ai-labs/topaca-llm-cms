@@ -1,63 +1,65 @@
-# Brief — Auftrag an den Agenten
+# Brief — the assignment to the agent
 
-Diese Datei füllt ein Mensch aus. Sie ist der Ausgangspunkt für jede neue
-Website und für jede größere Änderung.
+**Languages:** English (default) · [Deutsch](brief.example.de.md)
 
-Der Agent liest sie vor jeder inhaltlichen Entscheidung. Was hier nicht steht,
-erfindet er nicht — er fragt nach oder lässt die Stelle offen (R-07).
+A human fills in this file. It is the starting point for every new website and for every
+larger change.
 
-## Wer wir sind
+The agent reads it before every substantive decision. What is not written here it does not
+invent — it asks, or leaves the spot open (R-07).
 
-- Name, Rechtsform, Ort:
-- Was wir tun, in einem Satz:
-- Warum es uns gibt:
+## Who we are
 
-## Für wen wir es tun
+- Name, legal form, location:
+- What we do, in one sentence:
+- Why we exist:
 
-- Zielgruppe 1:
-- Zielgruppe 2:
-- Typische Situation dieser Menschen:
+## Who we do it for
 
-## Was die Website können soll
+- Audience 1:
+- Audience 2:
+- The typical situation of these people:
 
-- [ ] Neukundengewinnung
-- [ ] Bewerber ansprechen
-- [ ] Produkte erklären
-- [ ] Vertrauensbasis schaffen
-- [ ] Anderes:
+## What the website should do
 
-## Was die Website nicht sagen darf
+- [ ] win new customers
+- [ ] appeal to applicants
+- [ ] explain products
+- [ ] build trust
+- [ ] other:
+
+## What the website must not say
 
 - 
 
-## Belegmaterial in diesem Ordner
+## Evidence material in this folder
 
-| Datei / Ordner | Was darin ist | öffentlich verwendbar? |
+| File / folder | What is in it | usable publicly? |
 |---|---|---|
-|  |  | ja / nein / unklar |
+|  |  | yes / no / unclear |
 
-## Tonalität
+## Tone
 
-- Formell oder du:
-- Kurz und sachlich oder erzählend:
-- Begriffe, die wir verwenden:
-- Begriffe, die wir nicht verwenden:
+- Formal or informal:
+- Short and factual or narrative:
+- Terms we use:
+- Terms we do not use:
 
-## Gestaltung
+## Design
 
-- Bestehendes Logo: `brand/…`
-- Farben, Schriften:
-- Vorbilder, die passen:
-- Vorbilder, die nicht passen:
+- Existing logo: `brand/…`
+- Colors, fonts:
+- Role models that fit:
+- Role models that do not fit:
 
-## Startseiten-Absicht
+## Home page intent
 
-Was soll ein Mensch nach fünf Sekunden auf der Startseite wissen?
+What should a person know after five seconds on the home page?
 
 1.
 2.
 3.
 
-## Offene Fragen an den Agenten
+## Open questions for the agent
 
 - 

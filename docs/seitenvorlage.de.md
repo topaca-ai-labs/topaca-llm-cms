@@ -1,5 +1,7 @@
 # Seitenvorlage
 
+**Sprachen:** [English](page-template.md) (Standard) · Deutsch (diese Datei, Original)
+
 Kopieren nach `src/content/pages/<name>.md`, dann ausfüllen. Der Dateiname bestimmt
 die URL: `leistungen.md` → `/leistungen/`, `team/anna.md` → `/team/anna/`.
 Die Startseite ist **ausschließlich** `start.md`; `index` ist ein reservierter Name und

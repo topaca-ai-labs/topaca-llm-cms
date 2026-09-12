@@ -1,34 +1,34 @@
 # Assets
 
-`public/assets/` ist der Ort für veröffentlichte Assets: Bilder, PDFs, Schriften.
+**Languages:** English (default) · [Deutsch](assets.de.md)
 
-`public/` wird von Astro unverändert in den Build übernommen. Was hier liegt,
-ist also öffentlich — unter dem gleichen Pfad, den die Website ausliefert.
+`public/assets/` is the place for published assets: images, PDFs, fonts.
 
-## Übernahme aus `input/`
+`public/` is taken into the build by Astro unchanged. Whatever sits here is therefore
+public — under the same path the website serves.
 
-Material aus `input/` landet **nicht** automatisch hier. Übernahme ist ein
-eigener Schritt (AGENTS.md R-04):
+## Moving material in from `input/`
 
-1. Das Material ansehen: Was ist es? Wem gehört es? Ist es zur Veröffentlichung
-   gedacht?
-2. Bei Bedarf aufbereiten: zugeschnitten, komprimiert, sprechender Dateiname,
-   keine eingebetteten Metadaten aus Fremdsystemen (`docs/roadmap.md` nennt
-   Bildaufbereitung als bewussten Rückstand — hier entscheidet der Mensch).
-3. Übernehmen und im Commit-Message belegen, aus welchem `input/`-Ordner die
-   Datei stammt und warum sie öffentlich sein darf (R-07).
+Material from `input/` does **not** land here automatically. Moving it in is a step of its
+own (AGENTS.md R-04):
 
-Der Validator meldet zwei Dinge:
+1. Look at the material: what is it? Who owns it? Is it meant for publication?
+2. Prepare it if needed: cropped, compressed, meaningful file name, no embedded metadata from
+   foreign systems (`docs/roadmap.md` lists image preparation as a deliberate backlog item —
+   here the human decides).
+3. Move it in and document it in the commit message: which `input/` folder the file came from
+   and why it may be public (R-07).
 
-- `INPUT_IN_PUBLIC` — ein Ordner wie `public/input/` existiert, also Material
-  wurde unverändert in den Auslieferungsbereich gelegt.
-- `INPUT_IDENTICAL_FILE` — eine Datei hier ist byte-identisch mit einer Datei in
-  `input/`. Das ist ein Hinweis zur Bestätigung, kein Verdacht. Er erkennt nur
-  vollständig identische Dateien; eine geänderte Zeile entgeht ihm. Er ist keine
-  Datenlecksuche (siehe `docs/security.md`).
+The validator reports two things:
 
-## Keine Dokumentation in `public/`
+- `INPUT_IN_PUBLIC` — a folder such as `public/input/` exists, so material was placed into the
+  delivery area unchanged.
+- `INPUT_IDENTICAL_FILE` — a file here is byte-identical to a file in `input/`. That is a
+  prompt to confirm, not a suspicion. It only recognizes completely identical files; one
+  changed line escapes it. It is not a data-leak search (see `docs/security.md`).
 
-`README.md`-Dateien in `public/` werden mit ausgeliefert und sind dann über die
-Website lesbar. Interne Hinweise gehören in `docs/`. Der Build-Check meldet jede
-`README.md` im Auslieferungszustand als `FORBIDDEN_DIST_FILE` (R-03).
+## No documentation in `public/`
+
+`README.md` files in `public/` are served along with everything else and can then be read via
+the website. Internal notes belong in `docs/`. The build check reports every `README.md` in
+the delivery state as `FORBIDDEN_DIST_FILE` (R-03).

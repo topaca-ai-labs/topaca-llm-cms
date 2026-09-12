@@ -1,9 +1,9 @@
-# Zeilenenden: im Repo und in jedem Checkout LF. Ohne diese Datei erzeugt ein
-# Checkout unter Windows CRLF — und die Builds zweier Maschinen sind nicht mehr
-# byte-identisch (R-12), ohne dass jemand etwas falsch gemacht hätte.
+# Line endings: LF in the repository and in every checkout. Without this file a
+# Windows checkout produces CRLF — and the builds of two machines are no longer
+# byte-identical (R-12), without anyone having done anything wrong.
 * text=auto eol=lf
 
-# Generiertes und Binäres ausdrücklich markieren
+# Mark generated and binary files explicitly
 dist/** linguist-generated=false
 *.png binary
 *.jpg binary

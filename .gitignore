@@ -1,28 +1,31 @@
-# Build ist wegwerfbar (R-03) — niemals committen
+# The build is disposable (R-03) — never commit it
 dist/
 .astro/
 
-# Release-Archiv (scripts/release-archive.mjs) — erzeugt, nicht committet
+# Release archive (scripts/release-archive.mjs) — generated, not committed
 .release/
 
-# Abhängigkeiten
+# Dependencies
 node_modules/
 
-# Material in input/ ist privat by default (R-04, docs/security.md).
-# Publiziert wird über den Freigabeprozess, committet wird nur die Struktur.
-# Ausnahmen: READMEs und die Brief-Vorlage bleiben sichtbar.
+# Material in input/ is private by default (R-04, docs/security.md).
+# Publication runs through the approval process; only the structure is committed.
+# Exceptions: the READMEs and the brief templates stay visible (both languages).
 input/**
 !input/*/
 !input/README.md
+!input/README.de.md
 !input/brief.example.md
+!input/brief.example.de.md
 !input/*/README.md
+!input/*/README.de.md
 
 # Logs
 npm-debug.log*
 yarn-debug.log*
 pnpm-debug.log*
 
-# Geheimnisse (R-04) — niemals committen
+# Secrets (R-04) — never commit them
 .env
 .env.*
 

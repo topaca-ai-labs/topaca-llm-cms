@@ -1,89 +1,90 @@
-# Architektur
+# Architecture
 
-Referenzarchitektur der Minimalvariante. Die Auftragsgeschichte steht in
-`docs/llm-cms.md`, die Kritik an v0.1 in `docs/feedback.md` und im Audit; dieses
-Dokument beschreibt den Zustand, der daraus entstanden ist.
+**Languages:** English (default) · [Deutsch](architecture.de.md)
 
-## 1. Wer was besitzt
+Reference architecture of the minimal variant. The origin story is in `docs/llm-cms.md`,
+the criticism of v0.1 in `docs/feedback.md` and in the audit; this document describes the
+state that resulted from them.
 
-| Aufgabe | Besitzer | Eigener Code |
+## 1. Who owns what
+
+| Task | Owner | own code |
 | --- | --- | --- |
-| Frontmatter-Schema im Build | Astro Content Layers (`src/content.config.ts`) | 23 Zeilen |
-| Rendering, Routen, Assets | Astro | 0 Zeilen |
-| Site-Metadaten | `site.yaml` + `src/lib/site-schema.mjs` | Schema |
-| URL-Normalisierung | `src/lib/route.mjs` | eine Autorität |
-| Prüfungen | `scripts/check.mjs` | ja |
-| Wiederholbarkeitsnachweis | `scripts/reproducible.mjs` | ja |
-| Release-Archiv | `scripts/release-archive.mjs` | ja |
-| Regeln für Agenten | `AGENTS.md` | — |
+| Frontmatter schema in the build | Astro Content Layers (`src/content.config.ts`) | 23 lines |
+| Rendering, routes, assets | Astro | 0 lines |
+| Site metadata | `site.yaml` + `src/lib/site-schema.mjs` | schema |
+| URL normalization | `src/lib/route.mjs` | one authority |
+| Checks | `scripts/check.mjs` | yes |
+| Reproducibility proof | `scripts/reproducible.mjs` | yes |
+| Release archive | `scripts/release-archive.mjs` | yes |
+| Rules for agents | `AGENTS.md` | — |
 
-Ein eigener Compiler, eine eigene CLI oder ein Admin-UI existieren bewusst nicht
-(R-17). Der eigene Anteil ist klein, deterministisch und ohne Netzwerkzugriff.
+A compiler of our own, a CLI of our own or an admin UI deliberately do not exist (R-17).
+The part we own is small, deterministic and runs without network access.
 
-## 2. Schichten
+## 2. Layers
 
 ```text
-input/          Rohtext, Vertrauensgrenze, standardmäßig nicht getrackt
-   ↓ Agent überträgt Bedeutung, Mensch gibt frei
-site.yaml       Name, Domain, Sprache, lifecycle, Navigation, contact
-src/content/    Markdown-Seiten (Inhalt, kein HTML — R-22)
-src/layouts/    ein Layout, eine Überschrift, robots-Meta aus lifecycle
-src/components/ Kontakt-Baustein (SSoT aus site.yaml)
-src/pages/      Routen: [...slug], index, sitemap.xml, robots.txt
-public/         unveränderte Auslieferung (Assets, Favicon)
+input/          raw material, trust boundary, untracked by default
+   ↓ agent transfers meaning, human approves
+site.yaml       name, domain, language, lifecycle, navigation, contact
+src/content/    Markdown pages (content, no HTML — R-22)
+src/layouts/    one layout, one heading, robots meta from lifecycle
+src/components/ contact block (single source of truth from site.yaml)
+src/pages/      routes: [...slug], index, sitemap.xml, robots.txt
+public/         served unchanged (assets, favicon)
    ↓ astro build
-dist/           wegwerfbar, niemals committet
+dist/           disposable, never committed
 ```
 
-## 3. Eine Autorität für URLs
+## 3. One authority for URLs
 
-`src/lib/route.mjs` ist die einzige Stelle, die aus einer Datei eine URL macht und
-aus einem Link ein Dateiziel. Sie liefert:
+`src/lib/route.mjs` is the only place that turns a file into a URL and a link into a file
+target. It provides:
 
-| Funktion | Vertrag |
+| Function | Contract |
 | --- | --- |
-| `splitTarget(href)` | trennt Pfad, Query und Fragment — Query und Fragment sind nie Teil der Route |
-| `canonical(path)` | kanonische Route oder `null`; idempotent, akzeptiert nur `a-z 0-9 - /` |
-| `invalidSegments(path)` | Segmente, die gegen R-10 verstoßen (Großbuchstaben, Umlaute, Leerzeichen, `..`, Prozent) |
-| `routeForPage(id, slug)` | Startseite ist `start.md` → `/`, sonst `/pfad/` |
+| `splitTarget(href)` | separates path, query and fragment — query and fragment are never part of the route |
+| `canonical(path)` | canonical route or `null`; idempotent, accepts only `a-z 0-9 - /` |
+| `invalidSegments(path)` | segments that violate R-10 (capitals, umlauts, spaces, `..`, percent) |
+| `routeForPage(id, slug)` | home page is `start.md` → `/`, otherwise `/path/` |
 | `outputFileFor(route)` | `/` → `index.html`, `/a/` → `a/index.html` |
-| `isPagePath(path)` | Seite oder Asset |
+| `isPagePath(path)` | page or asset |
 
-Layout (`src/lib/page.ts`, `src/layouts/page.astro`), Renderer (`src/pages/*.astro`)
-und Validator (`scripts/check.mjs`) rufen **dieselbe** Funktion auf. v0.1 hatte zwei
-Routenlogiken: der Validator ließ `start.md` als Startseite gelten, der Renderer
-brauchte `index.md`. Ein solcher Bruch ist damit strukturell ausgeschlossen, nicht
-nur getestet.
+The layout (`src/lib/page.ts`, `src/layouts/page.astro`), the renderer (`src/pages/*.astro`)
+and the validator (`scripts/check.mjs`) call **the same** function. v0.1 had two routing
+logics: the validator accepted `start.md` as the home page, the renderer needed `index.md`.
+Such a break is now structurally excluded, not merely tested.
 
-`page.ts` ist TypeScript für Astro, `route.mjs` reines JavaScript — so können
-Renderer und Validator denselben Code ohne Umdenken benutzen.
+`page.ts` is TypeScript for Astro, `route.mjs` is plain JavaScript — that is how renderer
+and validator use the same code without any translation step.
 
-## 4. schema für site.yaml
+## 4. Schema for site.yaml
 
-`src/lib/site-schema.mjs` (Zod) lässt nur zu: `name`, `tagline`, `url`, `language`,
-`lifecycle`, `nav`, `footer`, `contact`. `strict()` bedeutet: ein unbekanntes Feld ist
-ein Fehler. Eine Navigation, die unter `navi:` steht, ist kein toter Konfigurationsteil,
-sondern eine Diagnose (`SITE_YAML_INVALID`) — inklusive Pfad (`site.yaml → navi`).
+`src/lib/site-schema.mjs` (Zod) permits only: `name`, `tagline`, `url`, `language`,
+`lifecycle`, `nav`, `footer`, `contact`. `strict()` means: an unknown field is an error. A
+navigation written under `navi:` is not a piece of dead configuration but a diagnostic
+(`SITE_YAML_INVALID`) — including the path (`site.yaml → navi`).
 
-Der Validator nutzt das geparste Objekt zusätzlich für Inhalte, die kein Schema
-prüfen kann: Duplikate je Navigationsliste, Zielexistenz, Platzhalter-Domain,
-Kontaktwerte. Bei Schemafehler wird mit dem rohen Wert weitergeprüft, damit ein
-Fehler nicht die übrigen Befunde verdeckt; der Fehler bleibt stehen und blockiert.
+The validator also uses the parsed object for content a schema cannot check: duplicates per
+navigation list, target existence, placeholder domain, contact values. On a schema error the
+raw value is used to keep checking, so one error does not hide the remaining findings; the
+error stays and blocks.
 
-## 5. Lebenszyklus
+## 5. Lifecycle
 
 ```text
-lifecycle: development (Standard)   →  robots: Disallow: /   +  noindex auf jeder Seite
-lifecycle: production                →  robots: Allow: / + Sitemap, keine noindex-Meta
+lifecycle: development (default)   →  robots: Disallow: /   +  noindex on every page
+lifecycle: production              →  robots: Allow: / + sitemap, no noindex meta
 ```
 
-Abgeleitet daraus: Schweregrade (`gate()`), Platzhalterbehandlung,
-Kontaktplatzhalter, Indexierungsprüfungen. `npm run check:release` verlangt
-`lifecycle: production` und meldet sonst `LIFECYCLE_NOT_PRODUCTION`.
+Derived from this: severities (`gate()`), placeholder handling, contact placeholders,
+indexing checks. `npm run check:release` requires `lifecycle: production` and otherwise
+reports `LIFECYCLE_NOT_PRODUCTION`.
 
-## 6. Diagnosen
+## 6. Diagnostics
 
-Eine Diagnose ist ein Datensatz, kein Textsatz:
+A diagnostic is a record, not a sentence:
 
 ```json
 {
@@ -92,13 +93,13 @@ Eine Diagnose ist ein Datensatz, kein Textsatz:
   "rule": "R-08",
   "file": "src/content/pages/start.md",
   "line": 9,
-  "target": "/gibt-es-nicht/",
-  "message": "toter interner Link in Zeile 9: /gibt-es-nicht/",
-  "hint": "Seite anlegen, Link entfernen oder Ziel korrigieren"
+  "target": "/does-not-exist/",
+  "message": "dead internal link in line 9: /does-not-exist/",
+  "hint": "create the page, remove the link, or correct the target"
 }
 ```
 
-`--json` liefert den Umschlag:
+`--json` returns the envelope:
 
 ```json
 { "ok": false, "mode": "source", "lifecycle": "development",
@@ -107,70 +108,68 @@ Eine Diagnose ist ein Datensatz, kein Textsatz:
   "diagnostics": [ … ] }
 ```
 
-Regeln dafür:
+The rules for this:
 
-- **Code-Namen sind stabil.** `SCREAMING_SNAKE`, kein `E-`/`W-`-Präfix (die Schwere
-  steht im eigenen Feld), nie umnummeriert, nie ohne Regelbezug.
-- **`rule`** verweist auf `AGENTS.md`; eine Diagnose ohne Regel ist eine Meinung.
-- **`line`/`target`** gehören dazu, wenn die Stelle bekannt ist — Tests prüfen sie.
-- **`hint`** ist die Reparatur, nicht die Wiederholung des Befundes.
-- Exit-Codes: `0` in Ordnung, `1` blockiert, `2` fehlerhafter Aufruf. Ein unbekannter
-  Modus ist `2` mit `UNKNOWN_MODE` — prüfen können heißt nicht durchlassen (fail-closed).
+- **Code names are stable.** `SCREAMING_SNAKE`, no `E-`/`W-` prefix (severity has its own
+  field), never renumbered, never without a rule reference.
+- **`rule`** points into `AGENTS.md`; a diagnostic without a rule is an opinion.
+- **`line`/`target`** are included when the location is known — tests check them.
+- **`hint`** is the repair, not a repetition of the finding.
+- Exit codes: `0` fine, `1` blocked, `2` faulty invocation. An unknown mode is `2` with
+  `UNKNOWN_MODE` — being able to check does not mean letting things through (fail-closed).
 
-## 7. Prüfmodelle
+## 7. Check models
 
-| Modus | Frage | Blockiert bei |
+| Mode | Question | Blocks on |
 | --- | --- | --- |
-| `source` | ist der Zustand konsistent? | MUST-Verletzungen |
-| `dist` | ist die Ausgabe korrekt? | MUST-Verletzungen |
-| `--strict` | zusätzlich: sind die SOLL-Vorgaben erfüllt? | auch Warnungen |
-| `--release` | ist das ein Livegang? | auch `lifecycle: development`, Platzhalter, Kontaktlücken |
+| `source` | is the state consistent? | MUST violations |
+| `dist` | is the output correct? | MUST violations |
+| `--strict` | additionally: are the SHOULD expectations met? | also warnings |
+| `--release` | is this a go-live? | also `lifecycle: development`, placeholders, contact gaps |
 
-## 8. Testschichten
+## 8. Test layers
 
-| Schicht | Datei | Beweis |
+| Layer | File | Proof |
 | --- | --- | --- |
-| Einheiten | `tests/route.test.mjs` | URL-Normalisierung, Segmente, Idempotenz, reserviertenamen |
-| Contract | `tests/validator.test.mjs` | jede Regel hat einen Fehlerfall mit Code, Datei, Zeile |
-| Integration | `tests/build.test.mjs` | echter Astro-Build, dist-Check, Template nicht indexierbar, Kontakt aus `site.yaml` |
+| Units | `tests/route.test.mjs` | URL normalization, segments, idempotency, reserved names |
+| Contract | `tests/validator.test.mjs` | every rule has a failure case with code, file, line |
+| Integration | `tests/build.test.mjs` | a real Astro build, dist check, template not indexable, contact from `site.yaml` |
 
-Fixtures sind echte Projektkopien in einem temporären Verzeichnis
-(`tests/fixtures/base`), nicht mit `sed` verbogene Text. Jeder Test ist unabhängig,
-keine Reihenfolge, kein geteiltes Verzeichnis. Der Harness ist `node:test` — ohne
-Bash, ohne `mktemp`, ohne Dialekte. Ein Test, der nur "Exit ungleich 0" prüft, gilt
-als unzureichend: erwartet wird der benannte Befund.
+Fixtures are real project copies in a temporary directory (`tests/fixtures/base`), not text
+bent with `sed`. Every test is independent, no ordering, no shared directory. The harness is
+`node:test` — no bash, no `mktemp`, no dialects. A test that only asserts "exit not 0" counts
+as insufficient: the named finding is expected.
 
-## 9. Umgebung
+## 9. Environment
 
-Reproduzierbarkeit braucht eine fixierte Umgebung, sonst ist der Nachweis eine
-Aussage über den Zufall.
+Reproducibility needs a pinned environment, otherwise the proof is a statement about chance.
 
-| Fixiert durch | Wert |
+| Pinned by | Value |
 | --- | --- |
-| Node | `.node-version` (Referenz), `engines.node >= 22.12` |
+| Node | `.node-version` (reference), `engines.node >= 22.12` |
 | npm | `packageManager` in `package.json` |
-| Abhängigkeiten | `package-lock.json`, CI mit `npm ci` |
-| CI-Aktionen | SHA-pinning in `.github/workflows/validate.yml` |
+| Dependencies | `package-lock.json`, CI with `npm ci` |
+| CI actions | SHA pinning in `.github/workflows/validate.yml` |
 
-`npm run reproducible` vergleicht zwei Builds **in dieser Umgebung** und sagt das
-auch im Text. Cross-Environment-Reproduzierbarkeit (anderes Betriebssystem, andere
-Node-Version, Build in drei Jahren) ist nicht behauptet; der Weg dorthin wäre ein
-Container-Image mit exakter Toolchain — Rückstand in `docs/roadmap.md`.
+`npm run reproducible` compares two builds **in this environment** and says so in its output.
+Cross-environment reproducibility (different operating system, different Node version, a
+build in three years) is not claimed; the road there would be a container image with the
+exact toolchain — deferred in `docs/roadmap.md`.
 
-## 10. Entscheidungen und ihre Gründe
+## 10. Decisions and their reasons
 
-| Entscheidung | Grund | Alternative, verworfen |
+| Decision | Reason | Alternative, rejected |
 | --- | --- | --- |
-| Astro statt Hugo | Content-Layer-Schema im Build, Node vorhanden, keine Extrawerkzeugkette | Hugo (mehr Installation, kein Schema), eigener Compiler (R-17) |
-| `start.md` als einzige Startseite | eine Startseite, keine zwei Wahrheiten | `index.md` (Astro-Konvention) — kollidiert mit `src/pages/index.astro` |
-| YAML statt `astro:config`-JSON | Menschen lesen und agenten editieren es sauber | `astro.config.ts` (Code als Konfiguration) |
-| eigene Prüfungen statt `lychee`/`htmltest` | kein Netzwerk, keine Zusatzinstallation, deterministisch | externe Linkprüfer (Netzwerk im Build, R-12) |
-| `input/` standardmäßig ignoriert | Repository-Grenze ist die teurere Grenze | mitcommitten (veröffentlicht Rohtext) |
-| Tests in `node:test` | kein Runner, keine Bash-Abhängigkeit, Codes prüfbar | Bash- Selbsttest (v0.1: False Positives, keine Codes) |
-| eine URL-Autorität | Renderer und Validator können nicht auseinanderlaufen | doppelte Logik (v0.1-Fehler) |
+| Astro instead of Hugo | content layer schema in the build, Node present, no extra toolchain | Hugo (more to install, no schema), own compiler (R-17) |
+| `start.md` as the only home page | one home page, no two truths | `index.md` (Astro convention) — collides with `src/pages/index.astro` |
+| YAML instead of `astro:config` JSON | humans read it and agents edit it cleanly | `astro.config.ts` (code as configuration) |
+| own checks instead of `lychee`/`htmltest` | no network, no extra installation, deterministic | external link checkers (network in the build, R-12) |
+| `input/` ignored by default | the repository boundary is the expensive one | committing it (publishes raw material) |
+| tests in `node:test` | no runner, no bash dependency, codes verifiable | bash self-tests (v0.1: false positives, no codes) |
+| one URL authority | renderer and validator cannot drift apart | duplicated logic (the v0.1 error) |
 
-## 11. Was diese Architektur nicht ist
+## 11. What this architecture is not
 
-Kein CMS-Produkt, keine Mehrmandantenfähigkeit, kein Login, keine Workflow-Engine,
-kein Preview-Server, keine Datenbank, kein Publishing über API. Die Begründung und
-die Bedingungen für jede Ergänzung: `docs/roadmap.md`.
+No CMS product, no multi-tenancy, no login, no workflow engine, no preview server, no
+database, no publishing via API. The reasoning and the conditions for each addition:
+`docs/roadmap.md`.

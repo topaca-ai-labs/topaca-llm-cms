@@ -1,5 +1,8 @@
 # LLM-CMS
 
+**Languages:** English (original, written in English) · Deutsch: no German version of this
+idea file exists
+
 **A pattern for websites built and maintained by LLM-powered software agents.**
 
 > **The Agent is the CMS.

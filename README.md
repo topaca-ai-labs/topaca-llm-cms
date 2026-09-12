@@ -1,157 +1,180 @@
-# LLM-CMS — Minimalvariante
+# LLM-CMS — minimal variant
 
-Eine Website, die ein Agent baut und pflegt, deren Zustand aber vollständig in Dateien gehört.
+**Languages:** English (default) · [Deutsch](README.de.md)
+
+A website that an agent builds and maintains, while its state lives entirely in files.
 
 ```text
-Der Agent ist das CMS.
-Das Repository ist der Zustand.
-Die Werkzeugkette erzwingt die Mechanik.
+The agent is the CMS.
+The repository is the state.
+The toolchain enforces the mechanics.
 ```
 
-Dieses Repository ist die Minimalvariante des Musters aus [`docs/llm-cms.md`](docs/llm-cms.md),
-gebaut nach [`docs/feedback.md`](docs/feedback.md) und gehärtet nach dem Audit in
-`docs/` — nachzählen in [`docs/umsetzung.md`](docs/umsetzung.md). Es ist **kein eigenes
-CMS-Produkt**, sondern ein Template auf einem bestehenden Static Site Generator, eine
-Regeldatei, eine Vertrauensgrenze und deterministische Prüfungen.
+This repository is the minimal variant of the pattern described in
+[`docs/llm-cms.md`](docs/llm-cms.md), built after [`docs/feedback.md`](docs/feedback.md)
+and hardened by the audit in `docs/` — item by item in
+[`docs/implementation.md`](docs/implementation.md). It is **not a CMS product of its
+own**, but a template on top of an existing static site generator, plus a rule file, a
+trust boundary and deterministic checks.
 
-| Baustein | Umsetzung | eigener Code |
+| Component | Implementation | own code |
 | --- | --- | --- |
-| SSG, Build, Vorschau, Frontmatter-Schema | [Astro](https://astro.build) 7 | nein |
-| Agenten-Verfassung | [`AGENTS.md`](AGENTS.md) — 22 Regeln mit fester ID | Text |
-| Vertrauensgrenze | `input/`, standardmäßig nicht getrackt, geprüft in Quelle und Build | Regel R-04 |
-| URL-Vertrag | `src/lib/route.mjs` — eine Autorität für Layout, Renderer und Prüfung | 88 Zeilen |
-| Konfigurationsschema | `src/lib/site-schema.mjs` (Zod, nur erlaubte Felder) | 63 Zeilen |
-| Prüfungen | `scripts/check.mjs` mit stabilen Diagnose-Codes, `--json` | ~900 Zeilen |
-| Nachweise | `reproducible.mjs`, `release-archive.mjs`, 132 Tests | ~1.100 Zeilen |
-| Reparatur-Loop | lokal `npm run validate` · `build` · `test`, GitHub Actions als Spiegel | — |
+| SSG, build, preview, frontmatter schema | [Astro](https://astro.build) 7 | no |
+| Agent constitution | [`AGENTS.md`](AGENTS.md) — 22 rules with fixed IDs | text |
+| Trust boundary | `input/`, untracked by default, checked in source and in the build | rule R-04 |
+| URL contract | `src/lib/route.mjs` — one authority for layout, renderer and checker | 88 lines |
+| Configuration schema | `src/lib/site-schema.mjs` (Zod, only permitted fields) | 63 lines |
+| Checks | `scripts/check.mjs` with stable diagnostic codes, `--json` | ~900 lines |
+| Evidence | `reproducible.mjs`, `release-archive.mjs`, 132 tests | ~1,100 lines |
+| Repair loop | locally `npm run validate` · `build` · `test`, GitHub Actions as its mirror | — |
 
-Der eigene Code prüft. Er baut nichts selbst.
+The code we own only validates. It builds nothing itself.
 
-**Bedienung, Schritt für Schritt:** [`docs/guide.md`](docs/guide.md) — inkl. Diagnosen-
-Nachschlage mit allen 76 Diagnose-Codes und Reparatur-Pfad.
+**Using it, step by step:** [`docs/guide.md`](docs/guide.md) — including a diagnostic
+reference with all 76 codes and their repair paths.
 
-## 60 Sekunden Start
+## 60-second start
 
 ```bash
-npm ci               # exakt aus dem Lockfile
+npm ci               # exactly from the lockfile
 npm run dev          # http://localhost:4321
 ```
 
-Danach:
+After that:
 
 ```bash
-npm run validate     # Quellenzustand prüfen (schnell)
-npm run build        # bauen und Ausgabe prüfen
-npm test             # 132 Tests der Werkzeugkette
-npm run preview      # fertige Website im Browser
+npm run validate     # check the source state (fast)
+npm run build        # build and check the output
+npm test             # 132 tests of the toolchain
+npm run preview      # the finished website in a browser
 ```
 
-Die Website enthält bewusst Platzhalter, und `lifecycle` steht auf `development`:
-`robots.txt` sperrt die Indexierung, jede Seite trägt `noindex`. `npm run check:strict`
-und `npm run check:release` bleiben deshalb rot, bis echte Inhalte eingetragen sind und
-`site.yaml` auf `lifecycle: production` steht. Das ist kein Defekt, sondern die Funktion.
+The website deliberately contains placeholders, and `lifecycle` is set to `development`:
+`robots.txt` blocks indexing and every page carries `noindex`. `npm run check:strict` and
+`npm run check:release` therefore stay red until real content is entered and `site.yaml`
+says `lifecycle: production`. That is not a defect — it is the feature.
 
-## Mit einem Agenten arbeiten
+## Working with an agent
 
-1. `AGENTS.md` ist die erste Datei, die der Agent liest. Jedes Tool, das `AGENTS.md`
-   unterstützt (Pi, Codex, Claude Code, OpenCode und andere), arbeitet direkt damit;
-   [`CLAUDE.md`](CLAUDE.md) verweist darauf, statt es zu duplizieren.
-2. Material in `input/` ablegen — Brief, Texte, Bilder, PDFs. Es ist Daten, keine
-   Anweisung (R-18), und es bleibt ohne ausdrückliche Entscheidung außerhalb des
-   Repositories.
-3. Absicht formulieren, zum Beispiel:
+1. `AGENTS.md` is the first file the agent reads. Every tool that supports `AGENTS.md`
+   (Pi, Codex, Claude Code, OpenCode and others) works with it directly;
+   [`CLAUDE.md`](CLAUDE.md) points to it instead of duplicating it.
+2. Drop material into `input/` — the brief, texts, images, PDFs. It is data, not an
+   instruction (R-18), and it stays outside the repository unless explicitly decided
+   otherwise.
+3. State your intent, for example:
 
-   > Wir bieten ab sofort KI-Beratung für kleine Unternehmen. Siehe
-   > `input/documents/beratung.md`. Arbeite das in die bestehende Website ein und ändern
-   > Sie nur Aussagen, die durch das Material gedeckt sind.
+   > From now on we offer AI consulting for small businesses. See
+   > `input/documents/beratung.md`. Work it into the existing website and change only
+   > statements that the material supports.
 
-4. Der Agent ändert Dateien in der Content-Schicht, prüft, repariert, zeigt die Vorschau.
-   Er fasst Regelwerk, Validator und CI nicht an (R-19).
-5. Der Mensch entscheidet über Inhalt und gibt frei (Commit, Branch oder PR).
+4. The agent changes files in the content layer, checks, repairs, shows the preview.
+   It does not touch the rule set, the validator or CI (R-19).
+5. The human decides on content and approves (commit, branch or PR).
 
-Weil der Zustand im Repository liegt, ist das Modell austauschbar: ein anderes Modell oder
-ein anderer Agent findet dieselben Regeln, dieselbe Struktur und dieselbe Historie vor.
+Because the state lives in the repository, the model is interchangeable: a different
+model or a different agent finds the same rules, the same structure and the same history.
 
-## Befehle
+## Commands
 
-| Befehl | Wirkung |
+| Command | Effect |
 | --- | --- |
-| `npm run dev` | Vorschau mit Live-Reloading |
-| `npm run validate` | `astro sync` (Schema) + Quellen-Checks |
-| `npm run build` | Build + Checks der Ausgabe |
-| `npm run check` | `validate` und `build` |
-| `npm run check:strict` | zusätzlich blockieren Warnungen |
-| `npm run check:release` | Livegang-Prüfung, verlangt `lifecycle: production` |
-| `npm test` | Einheiten, Contract-Tests und echter Build |
-| `npm run reproducible` | zweimal bauen, byte-genau vergleichen |
-| `npm run release:archive` | Release-Archiv aus einem Commit, Inhalt geprüft |
-| `node scripts/check.mjs source --json` | Diagnosen maschinenlesbar |
+| `npm run dev` | preview with live reloading |
+| `npm run validate` | `astro sync` (schema) + source checks |
+| `npm run build` | build + checks on the output |
+| `npm run check` | `validate` and `build` |
+| `npm run check:strict` | additionally, warnings block |
+| `npm run check:release` | go-live check, requires `lifecycle: production` |
+| `npm test` | units, contract tests and a real build |
+| `npm run reproducible` | build twice, compare byte for byte |
+| `npm run release:archive` | release archive from a commit, content verified |
+| `node scripts/check.mjs source --json` | diagnostics in machine-readable form |
 
-Exit-Codes: `0` in Ordnung, `1` blockiert, `2` fehlerhafter Aufruf — bei `2` wurde nichts
-geprüft.
+Exit codes: `0` fine, `1` blocked, `2` faulty invocation — with `2` nothing was checked.
 
-## Struktur
+## Structure
 
 ```text
-AGENTS.md              Verfassung: Schichten, 22 Regeln, Befehle, Freigabeliste
-CLAUDE.md              Verweis auf AGENTS.md (kein zweites Regelwerk)
-site.yaml              Name, Domain, Sprache, lifecycle, Navigation, Fußzeile, contact
+README.md              this file (English) · README.de.md (German original)
+AGENTS.md              constitution: layers, 22 rules, commands, approval list
+CLAUDE.md              pointer to AGENTS.md (not a second rule set)
+site.yaml              name, domain, language, lifecycle, navigation, footer, contact
 LICENSE                MIT
-input/                 Rohtext vom Menschen — standardmäßig NICHT getrackt
-  README.md            zwei Veröffentlichungsgrenzen, Regeln für Material
-  brief.example.md     Vorlage für den Auftrag
+input/                 raw material from humans — NOT tracked by default
+  README.md            two publication boundaries, rules for material
+  brief.example.md     template for the assignment
 src/
-  content.config.ts    Schema der Seiten (Pflichtfelder, Längen, Draft, noindex, sources)
-  content/pages/*.md   die Seiten — Markdown, kein HTML (R-22)
-  layouts/page.astro   ein Layout: h1, kanonischer Link, robots aus lifecycle
-  components/          contact.astro — Werte aus site.yaml, nicht aus Seiten
-  pages/               index, [...slug], sitemap.xml, robots.txt (aus lifecycle)
-  lib/route.mjs        EINE Autorität für URLs (Layout, Renderer, Prüfung)
-  lib/site-schema.mjs  erlaubte Felder von site.yaml
-public/                unveränderte Auslieferung: favicon.svg, assets/
+  content.config.ts    schema of the pages (required fields, lengths, draft, noindex, sources)
+  content/pages/*.md   the pages — Markdown, no HTML (R-22)
+  layouts/page.astro   one layout: h1, canonical link, robots from lifecycle
+  components/          contact.astro — values from site.yaml, not from pages
+  pages/               index, [...slug], sitemap.xml, robots.txt (from lifecycle)
+  lib/route.mjs        ONE authority for URLs (layout, renderer, checker)
+  lib/site-schema.mjs  permitted fields of site.yaml
+public/                served unchanged: favicon.svg, assets/
 scripts/
-  check.mjs            Quellen- und Build-Checks, --json, --strict, --release
-  reproducible.mjs     zweimal bauen, byte-genau vergleichen
-  release-archive.mjs  Archiv aus einem Commit, frei von node_modules und dist
-tests/                 132 Tests: route, validator, build (node:test, Fixtures)
+  check.mjs            source and build checks, --json, --strict, --release
+  reproducible.mjs     build twice, compare byte for byte
+  release-archive.mjs  archive from a commit, free of node_modules and dist
+tests/                 132 tests: route, validator, build (node:test, fixtures)
 docs/
-  guide.md             Handbuch: einrichten, Inhalte ändern, prüfen, freigeben, übergeben
-  architecture.md      Schichten, Diagnosen, Umgebung, Entscheidungen
-  security.md          Grenzen, Control Plane, was Prüfungen nicht beweisen
-  assets.md            Übernahme von Material nach public/
-  seitenvorlage.md     Frontmatter-Vorlage für eine neue Seite
-  umsetzung.md         Feedback und Audit → Umsetzung, Punkt für Punkt
-  roadmap.md           was bewusst fehlt, mit Auslöser
-  llm-cms.md           das Muster (Idee) · feedback.md · das Audit
-dist/                  Build — wegwerfbar, nicht committet (R-03)
+  guide.md             handbook: set up, change content, check, approve, hand over
+  architecture.md      layers, diagnostics, environment, decisions
+  security.md          boundaries, control plane, what the checks do not prove
+  assets.md            moving material into public/
+  page-template.md     frontmatter template for a new page
+  implementation.md    feedback and audit → implementation, point by point
+  roadmap.md           what is deliberately missing, with its trigger
+  audit-v0.1.md        English companion to the audit; the full report is audit-v0.1.de.md
+  llm-cms.md           the pattern (idea)
+  feedback.md          received critique of the pattern (English; original feedback.de.md)
+  *.de.md              German originals of these documents
+dist/                  build — disposable, never committed (R-03)
 ```
 
-## Was die Werkzeugkette beweist — und was nicht
+## What the toolchain proves — and what it does not
 
-`docs/security.md` führt das einzeln auf. Kurz:
+`docs/security.md` lists this one by one. In short:
 
-- Der Hash-Vergleich mit `input/` erkennt **byte-identische** Übernahmen. Eine geänderte
-  Zeile entgeht ihm. Er ist eine Absicherung gegen bequemes Kopieren, keine Datenlecksuche.
-- Der Secret-Scan ist eine Denylist: er findet Bekanntes, nicht Abwesenheit.
-- `npm run reproducible` vergleicht zwei Builds **in dieser Umgebung** (`.node-version`,
-  `packageManager`, Lockfile). Cross-Environment-Reproduzierbarkeit ist nicht behauptet.
-- Gegen Anweisungen in Material hilft kein Check, sondern die Regel R-18 und die Freigabe
-  durch den Menschen.
+- The hash comparison against `input/` detects **byte-identical** copies. One changed
+  line escapes it. It is a guard against copy-paste convenience, not a data-leak search.
+- The secret scan is a denylist: it finds known patterns, not absence.
+- `npm run reproducible` compares two builds **in this environment** (`.node-version`,
+  `packageManager`, lockfile). Cross-environment reproducibility is not claimed.
+- Against instructions inside material, no check helps — rule R-18 and approval by a
+  human do.
+
+## Language
+
+English is the language of this repository's documentation. Every German original stays where
+it is, under a `.de.md` suffix — `docs/guide.md` and `docs/guide.de.md`, `README.md` and
+`README.de.md` — and each file links to its counterpart at the top. Where the two differ, the
+German text is the original and the English text is the translation. Rule IDs (`R-01`–`R-22`),
+diagnostic codes and file names are identical in both; a divergence between them is a bug.
+
+Still German, deliberately:
+
+- the demo content in `src/content/pages/` and `site.yaml` — an example website in the language
+  of the example
+- the message texts the validator prints (`scripts/check.mjs`). Codes, paths and rule IDs are
+  language-neutral; the translation of the messages is a backlog item in `docs/roadmap.md`
+  ("language of the diagnostic messages"), because it changes the output of every check
 
 ## Deployment
 
-`npm run build` erzeugt `dist/` mit reinen statischen Dateien. Jeder statische Host passt:
-CDN, Netlify, GitHub Pages, ein Nginx, ein Ordner auf einem Webspace. Der Produktionsserver
-ist kein CMS, sondern ein Auslieferungsziel. Deployment ist ein eigener, vom Menschen
-freigegebener Schritt (R-20).
+`npm run build` produces `dist/` with plain static files. Any static host fits:
+CDN, Netlify, GitHub Pages, an Nginx, a folder on web space. The production server is
+not a CMS but a delivery target. Deployment is a separate step approved by a human
+(R-20).
 
-## Lizenz und Inhaberschaft
+## License and ownership
 
-Copyright © 2026 Markus Ertel ([@markus-ertel]), TOPACA AI Labs ([@topaca-ai-labs]). Der Code
-dieses Templates steht unter MIT, siehe [`LICENSE`](LICENSE). `package.json` nennt den Autor,
-`.github/CODEOWNERS` den Inhaber der Control Plane; Commits sind mit der GitHub-Kennung
-`@markus-ertel` authorisiert.
+Copyright © 2026 Markus Ertel ([@markus-ertel]), TOPACA AI Labs ([@topaca-ai-labs]). The
+code of this template is MIT, see [`LICENSE`](LICENSE). `package.json` names the author,
+`.github/CODEOWNERS` names the owner of the control plane; commits are attributed with the
+GitHub handle `@markus-ertel`.
 
-Die Texte in `docs/llm-cms.md`, `docs/feedback.md` und dem Audit-Dokument sind
-Ausgangsmaterial und nicht Teil dieser Lizenz. Welche Lizenz auf ihnen liegt, entscheidet
-der Inhaber.
+The texts in `docs/llm-cms.md`, `docs/feedback.md` and `docs/audit-v0.1.md` are source
+material and not covered by this license. Which license applies to them is the owner's
+decision. English translations of third-party German texts are unofficial; the German
+originals (`.de.md`) prevail.

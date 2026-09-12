@@ -1,89 +1,96 @@
-# Rückstand
+# Backlog
 
-Was diese Minimalvariante bewusst nicht enthält, warum nicht, und was der Auslöser wäre.
-Jeder Punkt ist eine Entscheidung, kein Vergessen.
+**Languages:** English (default) · [Deutsch](roadmap.de.md)
 
-## Zurückgestellt, weil das Werkzeug den Nutzen nicht liefert
+What this minimal variant deliberately does not contain, why not, and what the trigger would
+be. Every item is a decision, not an oversight.
 
-**`llms.txt` und zweites Ausgabeformat.** Das Muster beschreibt einen „Machine Web"-Ausgang
-neben dem HTML. Der Standard dafür ist nicht verbreitet: Anbieter übernehmen ihn nicht, und
-ein zweiter Ausgang verdoppelt die Build-Logik, ohne dass heute jemand davon liest.
-Diese Website liefert stattdessen, was Maschinen tatsächlich auswerten: semantisches HTML,
-`lang`, kanonische Links, Meta-Beschreibungen, Sitemap, `robots.txt` aus dem Lebenszyklus.
-*Auslöser:* ein Auswerter, nachweislich davon profitiert.
+## Deferred because the tool does not deliver the benefit
 
-**Externer Link-Checker (`lychee`, `htmltest`).** Prüft auch externe Ziele, braucht aber eine
-Installation und macht die Prüfung vom Netzwerk abhängig. Der eingebaute Check prüft alles,
-was im Repo liegen muss, offline und deterministisch.
-*Auslöser:* häufige kaputte externe Ziele oder Anspruch auf Prüfung ausgehender Links.
+**`llms.txt` and a second output format.** The pattern describes a "machine web" output next
+to the HTML. The standard for it is not adopted: providers do not pick it up, and a second
+output doubles the build logic without anyone reading from it today. Instead this website
+supplies what machines actually evaluate: semantic HTML, `lang`, canonical links, meta
+descriptions, sitemap, `robots.txt` from the lifecycle. *Trigger:* an evaluator that
+demonstrably benefits.
 
-**Cross-Environment-Reproduzierbarkeit.** `npm run reproducible` vergleicht zwei Builds in
-derselben Umgebung (`.node-version`, `packageManager`, Lockfile) und sagt das auch. Ein
-anspruchsvollerer Beweis braucht ein festes Container-Image mit exakter Toolchain und einen
-Hashvergleich über Betriebssysteme hinweg — ein eigenes Thema, kein Textfehler.
-*Auslöser:* zwei Umgebungen, deren Builds sich unterscheiden und bei denen das zählen muss.
+**External link checker (`lychee`, `htmltest`).** Also checks external targets but needs an
+installation and makes the check depend on the network. The built-in check covers everything
+that has to lie in the repo, offline and deterministically. *Trigger:* frequently broken
+external targets, or a claim of checking outgoing links.
 
-## Zurückgestellt, weil der Bedarf noch nicht da ist
+**Cross-environment reproducibility.** `npm run reproducible` compares two builds in the same
+environment (`.node-version`, `packageManager`, lockfile) and says so. A more ambitious proof
+needs a fixed container image with the exact toolchain and a hash comparison across operating
+systems — its own topic, not a typo. *Trigger:* two environments whose builds differ and where
+that has to count.
 
-**Zweites Layout oder Komponenten.** Eine Seite, ein Layout, ein Stylesheet, ein
-Kontakt-Baustein. Solange jede Seite dieselbe Struktur hat, ist ein zweiter Rendering-Pfad
-nur eine zweite Möglichkeit, etwas kaputt zu machen. *Auslöser:* Seitentyp mit anderer
-Struktur (Blog-Liste, Terminseite).
+## Deferred because the need is not there yet
 
-**Mehrsprachigkeit.** Das Muster nennt „neue Sprache hinzufügen" als Wartungsfall. Astro hat
-dafür ein i18n-Konzept, das hier aber Navigation, URL-Schema, Checks und Inhalte gleichzeitig
-anfasst. *Auslöser:* eine zweite Sprache mit echtem Publikum und geklärter Übersetzungsarbeit.
+**Second layout or components.** One page, one layout, one stylesheet, one contact component.
+As long as every page has the same structure, a second rendering path is only a second way to
+break something. *Trigger:* a page type with a different structure (blog list, appointment
+page).
 
-**Formulare, Kommentare, Suche.** Erfordern einen Server oder einen Drittdienst und damit
-Datenschutz-Aussagen, die heute nicht getroffen sind. Kontakt läuft über `site.yaml`
-(`contact:`) und wird von Seiten mit `contact: true` gerendert. *Auslöser:* ein konkreter
-Kontaktweg mit Datenschutz-Freigabe.
+**Multilingualism.** The pattern names "add a new language" as a maintenance case. Astro has
+an i18n concept for this, but here it would touch navigation, URL scheme, checks and content
+at the same time. *Trigger:* a second language with a real audience and clarified translation
+work.
 
-**Bildoptimierung, Art Direction, Metadatenbereinigung.** Keine Transformation, keine Größen,
-keine Formate, kein EXIF-Entfernen. Bilder liegen so in `public/assets/`, wie sie übergeben
-werden — inklusive der Metadaten, die ein Foto tragen kann. *Auslöser:* Bilder größer als der
-Seitentext, Bedarf an Zuschnitten, oder Material aus Quellen mit eingebetteten Ortsdaten.
+**Forms, comments, search.** These require a server or a third-party service and thereby
+privacy statements that are not made today. Contact runs through `site.yaml` (`contact:`) and
+is rendered by pages with `contact: true`. *Trigger:* a concrete contact path with privacy
+approval.
 
-**Deployment-Workflows und Vorschau pro Branch.** Kein Workflow für Pages, Netlify oder S3,
-keine Deploy-Preview pro Pull Request. Der Build ist eine Schublade mit Dateien; die Wahl des
-Hosts ist offen, und Deployment ist absichtlich ein eigener Schritt (R-20).
-*Auslöser:* Hosting-Entscheidung.
+**Image optimization, art direction, metadata scrubbing.** No transformation, no sizes, no
+formats, no EXIF removal. Images lie in `public/assets/` exactly as handed over — including
+the metadata a photo can carry. *Trigger:* images larger than the page text, a need for crops,
+or material from sources with embedded location data.
 
-**Erzwungener Control-Plane-Schutz.** `CODEOWNERS` (Inhaber: @markus-ertel) und die Warnung
-`CONTROL_PLANE_CHANGED` sind vorbereitet, aber eine Datei kann keine Branch Protection
-einstellen: „Require review from code owners" und „Do not allow forced pushes" sind
-Repository-Einstellungen und müssen dort gesetzt werden. Org-weite Inhaberschaft braucht
-zudem ein Team unter @topaca-ai-labs — eine Organisation ist in `CODEOWNERS` kein gültiger
-Inhaber. Bis dahin ist R-19 eine Regel mit Sichtbarkeit, keine Sperre.
-*Auslöser:* Repo auf GitHub anlegen, Team und Branch Protection setzen.
+**Deployment workflows and per-branch preview.** No workflow for Pages, Netlify or S3, no
+deploy preview per pull request. The build is a drawer of files; the choice of host is open,
+and deployment is deliberately a step of its own (R-20). *Trigger:* a hosting decision.
 
-**Verschattung der Prüfungen (Mutation Testing).** Der Test-Harness beweist, dass jede Regel
-ihren Fehlerfall erwischt. Ein Werkzeug, das mutierte Validator-Versionen gegen die Tests
-laufen lässt, würde die Lücke zeigen, die eine Testliste trotzdem lässt.
-*Auslöser:* eine Regel, die trotz Testfall versagt.
+**Forced control-plane protection.** `CODEOWNERS` (owner: @markus-ertel) and the
+`CONTROL_PLANE_CHANGED` warning are prepared, but a file cannot set branch protection:
+"require review from code owners" and "do not allow forced pushes" are repository settings and
+must be set there. Organization-wide ownership additionally needs a team under
+@topaca-ai-labs — an organization is not a valid owner in `CODEOWNERS`. Until then R-19 is a
+rule with visibility, not a lock. *Trigger:* create the repository on GitHub, set team and
+branch protection.
 
-**Mehrere Agenten parallel.** Die Grenze `input/` und die Regel „eine Änderung pro Vorhaben"
-tragen zwei bis drei Agenten. Sperrvermerke, Merge-Konfliktregeln für `site.yaml` und ein
-Review-Zwang sind erst nötig, wenn tatsächlich Kollisionen auftreten. *Auslöser:* verlorene
-Änderungen durch parallele Arbeit.
+**Shadowing of the checks (mutation testing).** The test harness proves that every rule catches
+its failure case. A tool that runs mutated validator versions against the tests would show the
+gap a test list still leaves. *Trigger:* one rule that fails despite its test case.
 
-**Ordnung in `input/`.** Vier Ordner und Konvention. Kein Index, keine Verschlagwortung,
-keine Vorschau auf PDFs. *Auslöser:* Materialbestand, der ohne Suche nicht mehr beherrschbar ist.
+**Several agents in parallel.** The boundary `input/` and the rule "one change per undertaking"
+carry two to three agents. Lock notes, merge-conflict rules for `site.yaml` and a mandatory
+review are only needed once collisions actually occur. *Trigger:* lost changes through parallel
+work.
 
-## Entschieden (und warum es dabei bleibt)
+**Order in `input/`.** Four folders and a convention. No index, no tagging, no preview of PDFs.
+*Trigger:* a material inventory that is unmanageable without search.
 
-| Frage | Entscheidung |
+**Language of the diagnostic messages.** Codes, rule IDs and file paths are language-neutral;
+the message texts the validator prints are German. Translating them changes the output of every
+check and the expected values of every test — exactly the kind of change R-19 reserves for an
+explicit instruction. *Trigger:* a user who reads diagnostics in English — then as a switchable
+locale (default `en`), never as a fork of the message list.
+
+## Decided (and why it stays that way)
+
+| Question | Decision |
 | --- | --- |
-| Astro oder Hugo | Astro — Content-Layer-Schema im Build, Node-Umgebung vorhanden |
-| Lizenz und Inhaberschaft | MIT (`LICENSE`), Copyright © 2026 Markus Ertel, TOPACA AI Labs |
-| Startseite | ausschließlich `start.md`; `index` reserviert, `slug: /` abgelehnt |
-| `input/` im Repository | standardmäßig nicht getrackt (`input/**`), Ausnahmen nur README und Brief-Vorlage |
-| Schweregrade | `MUST` → Fehler, `SOLL` → Warnung; `--strict` hebt Warnungen auf Blockadestufe |
-| Indexierung | im `lifecycle: development` immer gesperrt; Livegang verlangt `lifecycle: production` |
-| Markdown in Inhalten | verboten (R-22), weil Astro HTML durchlässt und Markdown keine Sandbox ist |
+| Astro or Hugo | Astro — content-layer schema in the build, Node environment present |
+| License and ownership | MIT (`LICENSE`), Copyright © 2026 Markus Ertel, TOPACA AI Labs |
+| Home page | exclusively `start.md`; `index` reserved, `slug: /` rejected |
+| `input/` in the repository | untracked by default (`input/**`), exceptions only for the READMEs and the brief template |
+| Severities | `MUST` → error, `SHOULD` → warning; `--strict` raises warnings to blocking level |
+| Indexing | always blocked in `lifecycle: development`; go-live requires `lifecycle: production` |
+| Markdown in content | forbidden (R-22), because Astro passes HTML through and Markdown is no sandbox |
 
-## Grundsätzliche Schwelle
+## Fundamental threshold
 
-Neue Abhängigkeiten, neue Skripte und neue Schichten brauchen einen Eintrag hier mit Auslöser —
-und eine Antwort auf die Frage aus `docs/feedback.md`: *Lässt sich das nicht mit dem vorhandenen
-Werkzeug als Konvention statt als Code lösen?*
+New dependencies, new scripts and new layers need an entry here with a trigger — and an answer
+to the question from `docs/feedback.md`: *can this not be solved with the existing tooling as a
+convention rather than as code?*
