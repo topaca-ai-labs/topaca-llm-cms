@@ -51,13 +51,20 @@ or material from sources with embedded location data.
 deploy preview per pull request. The build is a drawer of files; the choice of host is open,
 and deployment is deliberately a step of its own (R-20). *Trigger:* a hosting decision.
 
-**Forced control-plane protection.** `CODEOWNERS` (owner: @markus-ertel) and the
-`CONTROL_PLANE_CHANGED` warning are prepared, but a file cannot set branch protection:
-"require review from code owners" and "do not allow forced pushes" are repository settings and
-must be set there. Organization-wide ownership additionally needs a team under
-@topaca-ai-labs — an organization is not a valid owner in `CODEOWNERS`. Until then R-19 is a
-rule with visibility, not a lock. *Trigger:* create the repository on GitHub, set team and
-branch protection.
+**Code-owner review as a lock.** Branch protection on `main` is set: three required status
+checks, a pull request before merging, no forced pushes, no deletion. `CODEOWNERS` (owner:
+@markus-ertel) and the `CONTROL_PLANE_CHANGED` warning exist, but "require review from code
+owners" is deliberately off: the organization has no team yet, an organization is not a valid
+owner in `CODEOWNERS`, and with a single owner who is also the author the flag would block that
+author's own merges. `enforce_admins` is also off, so the owner may still push directly.
+*Trigger:* a team under @topaca-ai-labs — then `CODEOWNERS` names the team, the flag goes on,
+and `enforce_admins` becomes a decision instead of a necessity.
+
+**License scope for the documentation texts.** Everything in this repository, code and texts,
+is by Markus Ertel; `LICENSE` grants MIT on the code. The idea file, the critique and the audit
+remain © with all rights reserved until the owner decides otherwise, because a permission to
+use does not follow from publication. *Trigger:* the first request to reuse or translate the
+texts — then as one sentence in the README and in `LICENSE`, not as fine print per file.
 
 **Shadowing of the checks (mutation testing).** The test harness proves that every rule catches
 its failure case. A tool that runs mutated validator versions against the tests would show the

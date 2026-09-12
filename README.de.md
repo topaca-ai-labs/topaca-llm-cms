@@ -126,7 +126,7 @@ docs/                englische Dateinamen sind der Standard
   roadmap.md           was bewusst fehlt, mit Auslöser
   audit-v0.1.md        englische Kurzfassung des Audits; der volle Text ist audit-v0.1.de.md
   llm-cms.md           das Muster (Idee)
-  feedback.md          erhaltene Kritik am Muster (englisch; Original: feedback.de.md)
+  feedback.md          Kritik am Muster (englisch; Original: feedback.de.md)
   *.de.md              deutsche Originale dieser Dokumente
 dist/                  Build — wegwerfbar, nicht committet (R-03)
 ```
@@ -167,13 +167,34 @@ CDN, Netlify, GitHub Pages, ein Nginx, ein Ordner auf einem Webspace. Der Produk
 ist kein CMS, sondern ein Auslieferungsziel. Deployment ist ein eigener, vom Menschen
 freigegebener Schritt (R-20).
 
-## Lizenz und Inhaberschaft
+## Autorschaft, Quellen und Lizenz
 
-Copyright © 2026 Markus Ertel ([@markus-ertel]), TOPACA AI Labs ([@topaca-ai-labs]). Der Code
-dieses Templates steht unter MIT, siehe [`LICENSE`](LICENSE). `package.json` nennt den Autor,
-`.github/CODEOWNERS` den Inhaber der Control Plane; Commits sind mit der GitHub-Kennung
-`@markus-ertel` authorisiert.
+Alles in diesem Repository — Code, Dokumentation, Ideendatei, Kritik und Audit — stammt von
+Markus Ertel ([@markus-ertel](https://github.com/markus-ertel)), TOPACA AI Labs
+([@topaca-ai-labs](https://github.com/topaca-ai-labs)). Ein fremder Text ist nicht darunter.
+`package.json` nennt den Autor, `.github/CODEOWNERS` den Inhaber der Control Plane; Commits
+sind mit der GitHub-Kennung `@markus-ertel` authorisiert.
 
-Die Texte in `docs/llm-cms.md`, `docs/feedback.de.md` und dem Audit-Dokument sind
-Ausgangsmaterial und nicht Teil dieser Lizenz. Welche Lizenz auf ihnen liegt, entscheidet
-der Inhaber.
+Der Code dieses Templates steht unter MIT, siehe [`LICENSE`](LICENSE).
+
+Woher Idee und Bewertung stammen — alles unter demselben Account veröffentlicht:
+
+- [`docs/llm-cms.md`](docs/llm-cms.md), das Pattern-Essay, unverändert aus dem Gist
+  [llm-cms.md](https://gist.github.com/markus-ertel/2b807c92971923d3494da0623dcf5a1b),
+  erstmals veröffentlicht am 9. September 2026. Die Kopie im Repository unterscheidet sich vom
+  Gist nur um ihre beiden Kopfzeilen (Sprache und Herkunft). Von hier an ist die Kopie
+  maßgeblich.
+- [`docs/feedback.de.md`](docs/feedback.de.md) (englisch:
+  [`docs/feedback.md`](docs/feedback.md)), die Kritik am Muster, geschrieben als Antwort auf
+  diesen Gist. Im Text selbst undatiert.
+- [`docs/audit-v0.1.de.md`](docs/audit-v0.1.de.md) (englische Kurzfassung:
+  [`docs/audit-v0.1.md`](docs/audit-v0.1.md)), das Audit der v0.1-Umsetzung, im Dokument auf
+  den 10. September 2026 datiert.
+
+Die englischen Fassungen von Kritik und Audit sind Übersetzungen desselben Autors. Die
+deutschen Originale (`.de.md`) bleiben maßgeblich, und die englische Audit-Seite ist eine
+Kurzfassung, nicht der volle Bericht.
+
+Ob die MIT-Erlaubnis auch auf diese Texte gelten soll oder ob sie © mit allen vorbehaltenen
+Rechten bleiben, entscheidet der Inhaber — geführt als Punkt in
+[`docs/roadmap.de.md`](docs/roadmap.de.md).

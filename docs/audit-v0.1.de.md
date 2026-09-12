@@ -3,6 +3,8 @@
 
 **Sprachen:** [English](audit-v0.1.md) (englische Kurzfassung) · Deutsch (dieses Dokument ist der vollständige Originaltext)
 
+**Autor:** Markus Ertel ([@markus-ertel](https://github.com/markus-ertel)) — derselbe Autor wie
+der dieses Repositories  
 **Audit-Datum:** 10. September 2026  
 **Audit-Gegenstand:** `topaca-llm-cms.zip`  
 **Referenz:** `llm-cms.md` – LLM-CMS Pattern  

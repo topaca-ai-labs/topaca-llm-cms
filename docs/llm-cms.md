@@ -3,6 +3,11 @@
 **Languages:** English (original, written in English) · Deutsch: no German version of this
 idea file exists
 
+**Author:** Markus Ertel ([@markus-ertel](https://github.com/markus-ertel)). Published from the
+gist [llm-cms.md](https://gist.github.com/markus-ertel/2b807c92971923d3494da0623dcf5a1b), first
+published 9 September 2026. Apart from these two header lines, this copy is identical to the
+gist; the copy in this repository is the version the project maintains.
+
 **A pattern for websites built and maintained by LLM-powered software agents.**
 
 > **The Agent is the CMS.

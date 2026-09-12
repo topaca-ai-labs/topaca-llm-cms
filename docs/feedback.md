@@ -1,6 +1,7 @@
-> Received critique of the pattern — source material, not covered by this template's MIT
-> license. This English text is an **unofficial translation**; the German original
-> [`feedback.de.md`](feedback.de.md) prevails.
+> Critique of the pattern, written by the same author as this template (Markus Ertel,
+> [@markus-ertel](https://github.com/markus-ertel)) in response to the gist behind
+> [`llm-cms.md`](llm-cms.md). This English text is a translation; the German original
+> [`feedback.de.md`](feedback.de.md) stays the source of record.
 
 **Languages:** English (default) · [Deutsch](feedback.de.md)
 

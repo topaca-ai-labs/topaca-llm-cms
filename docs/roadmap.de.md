@@ -51,13 +51,22 @@ keine Deploy-Preview pro Pull Request. Der Build ist eine Schublade mit Dateien;
 Hosts ist offen, und Deployment ist absichtlich ein eigener Schritt (R-20).
 *Auslöser:* Hosting-Entscheidung.
 
-**Erzwungener Control-Plane-Schutz.** `CODEOWNERS` (Inhaber: @markus-ertel) und die Warnung
-`CONTROL_PLANE_CHANGED` sind vorbereitet, aber eine Datei kann keine Branch Protection
-einstellen: „Require review from code owners" und „Do not allow forced pushes" sind
-Repository-Einstellungen und müssen dort gesetzt werden. Org-weite Inhaberschaft braucht
-zudem ein Team unter @topaca-ai-labs — eine Organisation ist in `CODEOWNERS` kein gültiger
-Inhaber. Bis dahin ist R-19 eine Regel mit Sichtbarkeit, keine Sperre.
-*Auslöser:* Repo auf GitHub anlegen, Team und Branch Protection setzen.
+**Code-Owner-Review als Sperre.** Die Branch Protection auf `main` ist gesetzt: drei
+vorgeschriebene Status-Checks, Pull Request vor Merge, kein Force-Push, kein Löschen.
+`CODEOWNERS` (Inhaber: @markus-ertel) und die Warnung `CONTROL_PLANE_CHANGED` gibt es, aber
+„Require review from code owners" bleibt bewusst aus: Die Organisation hat noch kein Team,
+eine Organisation ist in `CODEOWNERS` kein gültiger Inhaber, und mit einem einzelnen Inhaber,
+der zugleich Autor ist, würde die Flagge die eigenen Merges blockieren. `enforce_admins` ist
+ebenfalls aus, der Inhaber darf also weiter direkt pushen. *Auslöser:* ein Team unter
+@topaca-ai-labs — dann nennt `CODEOWNERS` das Team, die Flagge geht an, und `enforce_admins`
+wäre eine Entscheidung statt einer Notwendigkeit.
+
+**Lizenzreichweite der Dokumentationstexte.** Alles in diesem Repository, Code wie Texte,
+stammt von Markus Ertel; die `LICENSE` gewährt MIT auf den Code. Ideendatei, Kritik und Audit
+bleiben © mit allen vorbehaltenen Rechten, bis der Inhaber anders entscheidet — weil sich eine
+Nutzungserlaubnis nicht aus dem Veröffentlichen ableitet. *Auslöser:* die erste Anfrage, die
+Texte zu übernehmen oder zu übersetzen — dann als ein Satz im README und in der `LICENSE`,
+nicht als Kleingedrucktes pro Datei.
 
 **Verschattung der Prüfungen (Mutation Testing).** Der Test-Harness beweist, dass jede Regel
 ihren Fehlerfall erwischt. Ein Werkzeug, das mutierte Validator-Versionen gegen die Tests

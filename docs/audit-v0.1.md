@@ -1,8 +1,8 @@
 # TOPACA LLM-CMS minimal variant
 ## Architecture & Implementation Audit v0.1 — English companion
 
-> **Scope of this file.** The audit is source material received from outside this project and
-> is not covered by the code's MIT license (`docs/feedback.md` explains the origin). The full
+> **Scope of this file.** The audit is by the same author as this template (Markus Ertel,
+> [@markus-ertel](https://github.com/markus-ertel)) and is dated 10 September 2026. The full
 > report is the German [`audit-v0.1.de.md`](audit-v0.1.de.md), 53 sections. This page is an
 > **abridged English companion**: the verdict, the blockers, the finding index, the priorities
 > and the acceptance criteria. For argumentation, code excerpts and the exact wording of a

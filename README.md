@@ -127,7 +127,7 @@ docs/
   roadmap.md           what is deliberately missing, with its trigger
   audit-v0.1.md        English companion to the audit; the full report is audit-v0.1.de.md
   llm-cms.md           the pattern (idea)
-  feedback.md          received critique of the pattern (English; original feedback.de.md)
+  feedback.md          critique of the pattern (English; original feedback.de.md)
   *.de.md              German originals of these documents
 dist/                  build — disposable, never committed (R-03)
 ```
@@ -167,14 +167,32 @@ CDN, Netlify, GitHub Pages, an Nginx, a folder on web space. The production serv
 not a CMS but a delivery target. Deployment is a separate step approved by a human
 (R-20).
 
-## License and ownership
+## Authorship, sources and license
 
-Copyright © 2026 Markus Ertel ([@markus-ertel]), TOPACA AI Labs ([@topaca-ai-labs]). The
-code of this template is MIT, see [`LICENSE`](LICENSE). `package.json` names the author,
-`.github/CODEOWNERS` names the owner of the control plane; commits are attributed with the
-GitHub handle `@markus-ertel`.
+Everything in this repository — code, documentation, the idea file, the critique, the audit —
+is written by Markus Ertel ([@markus-ertel](https://github.com/markus-ertel)), TOPACA AI Labs
+([@topaca-ai-labs](https://github.com/topaca-ai-labs)). No text in here is by a third party.
+`package.json` names the author, `.github/CODEOWNERS` names the owner of the control plane;
+commits are attributed with the GitHub handle `@markus-ertel`.
 
-The texts in `docs/llm-cms.md`, `docs/feedback.md` and `docs/audit-v0.1.md` are source
-material and not covered by this license. Which license applies to them is the owner's
-decision. English translations of third-party German texts are unofficial; the German
-originals (`.de.md`) prevail.
+The code of this template is MIT, see [`LICENSE`](LICENSE).
+
+Where the idea and its evaluation come from — all published under the same account:
+
+- [`docs/llm-cms.md`](docs/llm-cms.md), the pattern essay, unchanged from the gist
+  [llm-cms.md](https://gist.github.com/markus-ertel/2b807c92971923d3494da0623dcf5a1b), first
+  published 9 September 2026. The copy in this repository differs from the gist only by its two
+  header lines (language and provenance). From here on the copy is authoritative.
+- [`docs/feedback.de.md`](docs/feedback.de.md) (English: [`docs/feedback.md`](docs/feedback.md)),
+  the critique of the pattern, written as a response to that gist. Undated in the text itself.
+- [`docs/audit-v0.1.de.md`](docs/audit-v0.1.de.md) (English companion:
+  [`docs/audit-v0.1.md`](docs/audit-v0.1.md)), the audit of the v0.1 implementation, dated
+  10 September 2026 inside the document.
+
+The English versions of the critique and of the audit are translations by the same author. The
+German originals (`.de.md`) stay the source of record, and the English audit page is an
+abridgement rather than the full report.
+
+Whether the MIT grant should also cover these texts, or whether they stay © with all rights
+reserved, is the owner's open decision — kept as an item in
+[`docs/roadmap.md`](docs/roadmap.md).

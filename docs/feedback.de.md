@@ -1,5 +1,8 @@
 **Sprachen:** [English](feedback.md) (Standard) · Deutsch (diese Datei, Original)
 
+**Autor:** Markus Ertel ([@markus-ertel](https://github.com/markus-ertel)) — derselbe Autor wie
+der dieses Templates. Geschrieben als Antwort auf den Gist zu [`llm-cms.md`](llm-cms.md).
+
 Kurze Antwort: Nein, das Konzept selbst ist nicht zu kompliziert gedacht – die beschriebene Architektur ist sogar bewusst minimalistisch. Der Text wirkt nur komplex, weil er ein ausführliches Essay ist. Und ja: Die Realisierung geht deutlich einfacher, als der Gist suggeriert – etwa 90% davon bekommst du heute mit Standardwerkzeugen, ohne eigene Toolchain.
 
 ## Was der Gist wirklich beschreibt
