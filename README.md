@@ -197,6 +197,6 @@ The English versions of the critique and of the audit are translations by the sa
 German originals (`.de.md`) stay the source of record, and the English audit page is an
 abridgement rather than the full report.
 
-Decided 12 September 2026: the grant covers the texts as well. Reuse them, translate them,
+Decided 14 September 2026: the grant covers the texts as well. Reuse them, translate them,
 republish them — the one condition the license imposes is that the copyright and permission
 notice stays attached to the copy.

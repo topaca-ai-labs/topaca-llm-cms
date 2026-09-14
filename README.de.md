@@ -200,6 +200,6 @@ Die englischen Fassungen von Kritik und Audit sind Übersetzungen desselben Auto
 deutschen Originale (`.de.md`) bleiben maßgeblich, und die englische Audit-Seite ist eine
 Kurzfassung, nicht der volle Bericht.
 
-Entschieden am 12. September 2026: Die Erlaubnis gilt auch für die Texte. Weiterverwenden,
+Entschieden am 14. September 2026: Die Erlaubnis gilt auch für die Texte. Weiterverwenden,
 übersetzen, neu veröffentlichen — die einzige Bedingung der Lizenz ist, dass der
 Copyright- und Genehmigungshinweis bei der Kopie bleibt.
