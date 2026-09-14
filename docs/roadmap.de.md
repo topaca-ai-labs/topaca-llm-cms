@@ -86,6 +86,7 @@ dann als umschaltbare Locale (Standard `en`), nie als Abzweigung der Meldungslis
 | --- | --- |
 | Astro oder Hugo | Astro — Content-Layer-Schema im Build, Node-Umgebung vorhanden |
 | Lizenz und Inhaberschaft | MIT (`LICENSE`) auf das ganze Repository, Code und Texte; Copyright © 2026 Markus Ertel, TOPACA AI Labs — durchgängig ein Autor, es fehlt also keine Erlaubnis Dritter |
+| Format der Lizenzdatei | der unveränderte MIT-Text, kein angehängter Prosatext: mit einem Zusatzabsatz meldet die Lizenz-Erkennung `Other` statt MIT. Die Reichweite der Erlaubnis steht stattdessen im README |
 | Startseite | ausschließlich `start.md`; `index` reserviert, `slug: /` abgelehnt |
 | `input/` im Repository | standardmäßig nicht getrackt (`input/**`), Ausnahmen nur README und Brief-Vorlage |
 | Schweregrade | `MUST` → Fehler, `SOLL` → Warnung; `--strict` hebt Warnungen auf Blockadestufe |

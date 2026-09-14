@@ -175,9 +175,11 @@ is written by Markus Ertel ([@markus-ertel](https://github.com/markus-ertel)), T
 `package.json` names the author, `.github/CODEOWNERS` names the owner of the control plane;
 commits are attributed with the GitHub handle `@markus-ertel`.
 
-The MIT license in [`LICENSE`](LICENSE) covers the whole repository: code and texts. Its last
-paragraph names that scope explicitly, so nobody has to guess whether an idea file, a critique
-or an audit travels with the license.
+The MIT license in [`LICENSE`](LICENSE) covers the whole repository: code and texts. The
+copyright holder grants it to the entire contents explicitly — the idea file, the critique, the
+audit, the rule files and both READMEs included. The license file stays the unmodified MIT text
+on purpose: with a paragraph appended, GitHub and license scanners label the repository "Other"
+instead of MIT, and a correct label is worth more to a reuse decision than the paragraph was.
 
 Where the idea and its evaluation come from — all published under the same account:
 

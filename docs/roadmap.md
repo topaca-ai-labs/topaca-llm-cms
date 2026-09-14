@@ -84,6 +84,7 @@ locale (default `en`), never as a fork of the message list.
 | --- | --- |
 | Astro or Hugo | Astro — content-layer schema in the build, Node environment present |
 | License and ownership | MIT (`LICENSE`) on the whole repository, code and texts; Copyright © 2026 Markus Ertel, TOPACA AI Labs — one author throughout, so no third-party permission is missing |
+| Format of the license file | the unmodified MIT text, no appended prose: with an extra paragraph the license detector reports `Other` instead of MIT. The scope of the grant is stated in the README instead |
 | Home page | exclusively `start.md`; `index` reserved, `slug: /` rejected |
 | `input/` in the repository | untracked by default (`input/**`), exceptions only for the READMEs and the brief template |
 | Severities | `MUST` → error, `SHOULD` → warning; `--strict` raises warnings to blocking level |

@@ -19,12 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-Scope of this license. The copyright holder grants the above permission to the
-entire contents of this repository, not only to source code. That includes the
-documentation in `docs/` (among them the idea file `docs/llm-cms.md`, the
-critique in `docs/feedback.de.md` and `docs/feedback.md`, the audit in
-`docs/audit-v0.1.de.md` and its English companion `docs/audit-v0.1.md`), the rule
-files `AGENTS.md` and `CLAUDE.md`, and the README files in both languages. All of
-it is written by the copyright holder named above, so no part of it depends on a
-third party's permission.

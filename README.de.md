@@ -175,9 +175,12 @@ Markus Ertel ([@markus-ertel](https://github.com/markus-ertel)), TOPACA AI Labs
 `package.json` nennt den Autor, `.github/CODEOWNERS` den Inhaber der Control Plane; Commits
 sind mit der GitHub-Kennung `@markus-ertel` authorisiert.
 
-Die MIT-Lizenz in [`LICENSE`](LICENSE) gilt für das ganze Repository: Code und Texte. Ihr
-letzter Absatz nennt diese Reichweite ausdrücklich, damit niemand raten muss, ob eine
-Ideendatei, eine Kritik oder ein Audit mit der Lizenz mitwandert.
+Die MIT-Lizenz in [`LICENSE`](LICENSE) gilt für das ganze Repository: Code und Texte. Der
+Urheber gewährt sie ausdrücklich auf den gesamten Inhalt — Ideendatei, Kritik, Audit,
+Regeldateien und beide READMEs. Die Lizenzdatei bleibt bewusst der unveränderte MIT-Text: Mit
+einem angehängten Absatz stufen GitHub und Lizenz-Scanner das Repository als „Other" ein statt
+als MIT, und eine korrekte Kennung ist für eine Wiederverwendungsentscheidung mehr wert als der
+Absatz.
 
 Woher Idee und Bewertung stammen — alles unter demselben Account veröffentlicht:
 
