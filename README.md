@@ -99,7 +99,7 @@ README.md              this file (English) · README.de.md (German original)
 AGENTS.md              constitution: layers, 22 rules, commands, approval list
 CLAUDE.md              pointer to AGENTS.md (not a second rule set)
 site.yaml              name, domain, language, lifecycle, navigation, footer, contact
-LICENSE                MIT
+LICENSE                MIT — covers code and texts
 input/                 raw material from humans — NOT tracked by default
   README.md            two publication boundaries, rules for material
   brief.example.md     template for the assignment
@@ -175,7 +175,9 @@ is written by Markus Ertel ([@markus-ertel](https://github.com/markus-ertel)), T
 `package.json` names the author, `.github/CODEOWNERS` names the owner of the control plane;
 commits are attributed with the GitHub handle `@markus-ertel`.
 
-The code of this template is MIT, see [`LICENSE`](LICENSE).
+The MIT license in [`LICENSE`](LICENSE) covers the whole repository: code and texts. Its last
+paragraph names that scope explicitly, so nobody has to guess whether an idea file, a critique
+or an audit travels with the license.
 
 Where the idea and its evaluation come from — all published under the same account:
 
@@ -193,6 +195,6 @@ The English versions of the critique and of the audit are translations by the sa
 German originals (`.de.md`) stay the source of record, and the English audit page is an
 abridgement rather than the full report.
 
-Whether the MIT grant should also cover these texts, or whether they stay © with all rights
-reserved, is the owner's open decision — kept as an item in
-[`docs/roadmap.md`](docs/roadmap.md).
+Decided 12 September 2026: the grant covers the texts as well. Reuse them, translate them,
+republish them — the one condition the license imposes is that the copyright and permission
+notice stays attached to the copy.

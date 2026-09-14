@@ -60,12 +60,6 @@ author's own merges. `enforce_admins` is also off, so the owner may still push d
 *Trigger:* a team under @topaca-ai-labs — then `CODEOWNERS` names the team, the flag goes on,
 and `enforce_admins` becomes a decision instead of a necessity.
 
-**License scope for the documentation texts.** Everything in this repository, code and texts,
-is by Markus Ertel; `LICENSE` grants MIT on the code. The idea file, the critique and the audit
-remain © with all rights reserved until the owner decides otherwise, because a permission to
-use does not follow from publication. *Trigger:* the first request to reuse or translate the
-texts — then as one sentence in the README and in `LICENSE`, not as fine print per file.
-
 **Shadowing of the checks (mutation testing).** The test harness proves that every rule catches
 its failure case. A tool that runs mutated validator versions against the tests would show the
 gap a test list still leaves. *Trigger:* one rule that fails despite its test case.
@@ -89,7 +83,7 @@ locale (default `en`), never as a fork of the message list.
 | Question | Decision |
 | --- | --- |
 | Astro or Hugo | Astro — content-layer schema in the build, Node environment present |
-| License and ownership | MIT (`LICENSE`), Copyright © 2026 Markus Ertel, TOPACA AI Labs |
+| License and ownership | MIT (`LICENSE`) on the whole repository, code and texts; Copyright © 2026 Markus Ertel, TOPACA AI Labs — one author throughout, so no third-party permission is missing |
 | Home page | exclusively `start.md`; `index` reserved, `slug: /` rejected |
 | `input/` in the repository | untracked by default (`input/**`), exceptions only for the READMEs and the brief template |
 | Severities | `MUST` → error, `SHOULD` → warning; `--strict` raises warnings to blocking level |

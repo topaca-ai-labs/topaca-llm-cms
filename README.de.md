@@ -98,7 +98,7 @@ geprüft.
 AGENTS.md              Verfassung: Schichten, 22 Regeln, Befehle, Freigabeliste
 CLAUDE.md              Verweis auf AGENTS.md (kein zweites Regelwerk)
 site.yaml              Name, Domain, Sprache, lifecycle, Navigation, Fußzeile, contact
-LICENSE                MIT
+LICENSE                MIT — gilt für Code und Texte
 input/                 Rohtext vom Menschen — standardmäßig NICHT getrackt
   README.md            zwei Veröffentlichungsgrenzen, Regeln für Material
   brief.example.md     Vorlage für den Auftrag
@@ -175,7 +175,9 @@ Markus Ertel ([@markus-ertel](https://github.com/markus-ertel)), TOPACA AI Labs
 `package.json` nennt den Autor, `.github/CODEOWNERS` den Inhaber der Control Plane; Commits
 sind mit der GitHub-Kennung `@markus-ertel` authorisiert.
 
-Der Code dieses Templates steht unter MIT, siehe [`LICENSE`](LICENSE).
+Die MIT-Lizenz in [`LICENSE`](LICENSE) gilt für das ganze Repository: Code und Texte. Ihr
+letzter Absatz nennt diese Reichweite ausdrücklich, damit niemand raten muss, ob eine
+Ideendatei, eine Kritik oder ein Audit mit der Lizenz mitwandert.
 
 Woher Idee und Bewertung stammen — alles unter demselben Account veröffentlicht:
 
@@ -195,6 +197,6 @@ Die englischen Fassungen von Kritik und Audit sind Übersetzungen desselben Auto
 deutschen Originale (`.de.md`) bleiben maßgeblich, und die englische Audit-Seite ist eine
 Kurzfassung, nicht der volle Bericht.
 
-Ob die MIT-Erlaubnis auch auf diese Texte gelten soll oder ob sie © mit allen vorbehaltenen
-Rechten bleiben, entscheidet der Inhaber — geführt als Punkt in
-[`docs/roadmap.de.md`](docs/roadmap.de.md).
+Entschieden am 12. September 2026: Die Erlaubnis gilt auch für die Texte. Weiterverwenden,
+übersetzen, neu veröffentlichen — die einzige Bedingung der Lizenz ist, dass der
+Copyright- und Genehmigungshinweis bei der Kopie bleibt.

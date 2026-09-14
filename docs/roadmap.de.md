@@ -61,13 +61,6 @@ ebenfalls aus, der Inhaber darf also weiter direkt pushen. *Auslöser:* ein Team
 @topaca-ai-labs — dann nennt `CODEOWNERS` das Team, die Flagge geht an, und `enforce_admins`
 wäre eine Entscheidung statt einer Notwendigkeit.
 
-**Lizenzreichweite der Dokumentationstexte.** Alles in diesem Repository, Code wie Texte,
-stammt von Markus Ertel; die `LICENSE` gewährt MIT auf den Code. Ideendatei, Kritik und Audit
-bleiben © mit allen vorbehaltenen Rechten, bis der Inhaber anders entscheidet — weil sich eine
-Nutzungserlaubnis nicht aus dem Veröffentlichen ableitet. *Auslöser:* die erste Anfrage, die
-Texte zu übernehmen oder zu übersetzen — dann als ein Satz im README und in der `LICENSE`,
-nicht als Kleingedrucktes pro Datei.
-
 **Verschattung der Prüfungen (Mutation Testing).** Der Test-Harness beweist, dass jede Regel
 ihren Fehlerfall erwischt. Ein Werkzeug, das mutierte Validator-Versionen gegen die Tests
 laufen lässt, würde die Lücke zeigen, die eine Testliste trotzdem lässt.
@@ -92,7 +85,7 @@ dann als umschaltbare Locale (Standard `en`), nie als Abzweigung der Meldungslis
 | Frage | Entscheidung |
 | --- | --- |
 | Astro oder Hugo | Astro — Content-Layer-Schema im Build, Node-Umgebung vorhanden |
-| Lizenz und Inhaberschaft | MIT (`LICENSE`), Copyright © 2026 Markus Ertel, TOPACA AI Labs |
+| Lizenz und Inhaberschaft | MIT (`LICENSE`) auf das ganze Repository, Code und Texte; Copyright © 2026 Markus Ertel, TOPACA AI Labs — durchgängig ein Autor, es fehlt also keine Erlaubnis Dritter |
 | Startseite | ausschließlich `start.md`; `index` reserviert, `slug: /` abgelehnt |
 | `input/` im Repository | standardmäßig nicht getrackt (`input/**`), Ausnahmen nur README und Brief-Vorlage |
 | Schweregrade | `MUST` → Fehler, `SOLL` → Warnung; `--strict` hebt Warnungen auf Blockadestufe |
